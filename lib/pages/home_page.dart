@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/category_list.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -7,13 +9,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("AR Books"),
+        title: const Text("AR kinder boeken"),
+        centerTitle: true,
       ),
-      body: Container(
-        alignment: Alignment.center,
-        color: Colors.white,
-        child: const Text("Nijntje is alive"),
-      ),
+      body: const CategoryListPage(),
     );
   }
 }
