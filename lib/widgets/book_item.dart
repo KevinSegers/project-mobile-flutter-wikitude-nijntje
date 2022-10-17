@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 typedef MyCallback = void Function();
 
-class CategoryItem extends StatelessWidget {
+class BookItem extends StatelessWidget {
   final String title, imageUrl, abstract;
   final MyCallback onTapped;
 
-  const CategoryItem(
+  const BookItem(
       {Key? key,
       required this.title,
       required this.imageUrl,
@@ -22,23 +22,28 @@ class CategoryItem extends StatelessWidget {
       onTap: () {
         onTapped();
       },
-      child: Column(
+      child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image.network(
-              imageUrl,
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
+          Expanded(
+            flex: 0,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.network(
+                  imageUrl,
+                  height: 120,
+                  width: 120,
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
           ),
-          Text(
-            abstract,
-            style: const TextStyle(color: Colors.black54, fontSize: 14),
-          ),
-          Container(
-            height: 20,
+          Expanded(
+            child: Text(
+              abstract,
+              style: const TextStyle(color: Colors.black54, fontSize: 14),
+            ),
           ),
         ],
       ),
