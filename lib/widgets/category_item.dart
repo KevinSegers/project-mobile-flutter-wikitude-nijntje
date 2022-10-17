@@ -37,9 +37,6 @@ class CategoryItem extends StatelessWidget {
             abstract,
             style: const TextStyle(color: Colors.black54, fontSize: 14),
           ),
-          Container(
-            height: 20,
-          ),
         ],
       ),
     );
