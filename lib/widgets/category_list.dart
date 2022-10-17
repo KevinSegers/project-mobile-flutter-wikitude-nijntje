@@ -1,5 +1,5 @@
 // overzicht met photoWidget + naam van categorie + aantal books
-// click action naar overviewBooks.dart => category doorgeven
+// click action naar book_list.dart => category doorgeven
 
 import 'package:flutter/material.dart';
 
