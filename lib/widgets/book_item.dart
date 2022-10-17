@@ -7,6 +7,20 @@ typedef MyCallback = void Function();
 class BookItem extends StatelessWidget {
   final String title, imageUrl, abstract;
   final MyCallback onTapped;
+  final available = false;
+  final favorite = false;
+
+  static IconButton filledStar = IconButton(
+      iconSize: 30,
+      color: Colors.yellow,
+      icon: const Icon(Icons.star),
+      onPressed: () {});
+
+  static IconButton emptyStar = IconButton(
+      iconSize: 30,
+      color: Colors.yellow,
+      icon: const Icon(Icons.star_outline_outlined),
+      onPressed: () {});
 
   const BookItem(
       {Key? key,
@@ -40,11 +54,34 @@ class BookItem extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Text(
-              abstract,
-              style: const TextStyle(color: Colors.black54, fontSize: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  abstract,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  textAlign: TextAlign.end,
+                  available ? "Beschikbaar" : "Wordt verwacht",
+                  style: const TextStyle(color: Colors.black, fontSize: 14),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                favorite ? filledStar : emptyStar
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
