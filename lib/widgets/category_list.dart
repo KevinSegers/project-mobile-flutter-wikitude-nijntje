@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:nijntje_is_alive/widgets/books_list.dart';
 
+import '../pages/books_by_category_list_page.dart';
 import 'category_item.dart';
 
 class CategoryListPage extends StatelessWidget {
@@ -27,7 +28,8 @@ class CategoryListPage extends StatelessWidget {
             onTapped: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const BooksListPage()),
+                MaterialPageRoute(
+                    builder: (context) => const BooksByCategoryListPage()),
               );
             },
           ),

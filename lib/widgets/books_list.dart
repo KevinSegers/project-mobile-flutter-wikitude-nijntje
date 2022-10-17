@@ -6,17 +6,13 @@ import 'package:flutter/material.dart';
 
 import 'book_item.dart';
 
-class BooksListPage extends StatelessWidget {
-  const BooksListPage({Key? key}) : super(key: key);
+class BooksList extends StatelessWidget {
+  const BooksList({Key? key}) : super(key: key);
 
 //TODO refactor from hard coded categories to dynamic books => see post_list.dart in de NYT app
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("AR kinder boeken"),
-        centerTitle: true,
-      ),
       body: GridView.count(
         childAspectRatio: (1 / .4),
         primary: false,
