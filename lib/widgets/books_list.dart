@@ -9,7 +9,9 @@ import 'book_item.dart';
 class BooksList extends StatelessWidget {
   const BooksList({Key? key}) : super(key: key);
 
-//TODO refactor from hard coded categories to dynamic books => see post_list.dart in de NYT app
+//TODO refactor from hard coded books to dynamic books => see post_list.dart in de NYT app
+//TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst
+//bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
   @override
   Widget build(BuildContext context) {
     return Scaffold(

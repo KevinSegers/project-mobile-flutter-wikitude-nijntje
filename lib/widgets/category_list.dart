@@ -11,6 +11,9 @@ class CategoryListPage extends StatelessWidget {
   const CategoryListPage({Key? key}) : super(key: key);
 
 //TODO refactor from hard coded categories to dynamic categories => see post_list.dart in de NYT app
+//TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst
+//bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
