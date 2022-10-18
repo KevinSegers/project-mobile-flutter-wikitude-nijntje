@@ -1,4 +1,4 @@
-package com.example.nijntje_is_alive
+package be.thomasmore.ar
 
 import io.flutter.embedding.android.FlutterActivity
 
