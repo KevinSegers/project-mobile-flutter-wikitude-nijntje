@@ -2,7 +2,6 @@
 // click action naar book_list.dart => category doorgeven
 
 import 'package:flutter/material.dart';
-import 'package:nijntje_is_alive/widgets/books_list.dart';
 
 import '../pages/books_by_category_list_page.dart';
 import 'category_item.dart';
