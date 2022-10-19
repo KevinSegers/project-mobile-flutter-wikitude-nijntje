@@ -5,9 +5,13 @@
 //TODO refactor from hard coded books to dynamic books => see post_list.dart in de NYT app
 //TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst
 //bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
+import 'dart:developer';
+
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
 import 'package:flutter/material.dart';
+
+import 'package:just_audio/just_audio.dart';
 
 import '../pages/ardino.dart';
 import 'book_item.dart';
@@ -20,7 +24,25 @@ class BooksList extends StatefulWidget {
 }
 
 class _BookListState extends State<BooksList> {
+  //Wikitude
   List<String> features = ["image_tracking"];
+
+  //Audio track
+  late AudioPlayer player;
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+    Future.delayed(
+        Duration.zero, () => player.setAsset('assets/audio/Nijntje.mp3'));
+    player.play();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +94,8 @@ class _BookListState extends State<BooksList> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const ArDinoPage()),
-                        )
+                        ),
+                        player.stop(),
                       }
                     else
                       {
