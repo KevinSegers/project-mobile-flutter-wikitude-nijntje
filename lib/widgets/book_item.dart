@@ -7,8 +7,8 @@ typedef MyCallback = void Function();
 class BookItem extends StatelessWidget {
   final String title, imageUrl, abstract;
   final MyCallback onTapped;
-  final available = false;
-  final favorite = false;
+  final available = false; //TODO replace with DB availability
+  final favorite = false; //TODO replace with DB favorite
 
   static IconButton filledStar = IconButton(
       iconSize: 30,
@@ -23,7 +23,7 @@ class BookItem extends StatelessWidget {
       onPressed: () {});
 
   const BookItem(
-      {Key? key,
+      {Key? key, //TODO add DB available and favorite
       required this.title,
       required this.imageUrl,
       required this.abstract,

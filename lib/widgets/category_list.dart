@@ -12,6 +12,7 @@ class CategoryListPage extends StatelessWidget {
 //TODO refactor from hard coded categories to dynamic categories => see post_list.dart in de NYT app
 //TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst
 //bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
+//TODO check every category for content => if not available => disable click action and add a <Wordt verwacht> text
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +39,13 @@ class CategoryListPage extends StatelessWidget {
           CategoryItem(
             title: "Category Bumba",
             imageUrl: "https://i.postimg.cc/DZr9Kysx/bumba-cover.jpg",
-            abstract: "Bumba <Under Construction>",
+            abstract: "Bumba <Wordt verwacht>",
             onTapped: () {},
           ),
           CategoryItem(
             title: "Category Dribbel",
             imageUrl: "https://i.postimg.cc/ydRvMQqB/dribbel-cover.jpg",
-            abstract: "Dribbel <Under Construction>",
+            abstract: "Dribbel <Wordt verwacht>",
             onTapped: () {},
           ),
         ],
