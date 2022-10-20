@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nijntje_is_alive/pages/home_page.dart';
 
+import 'package:flutter/services.dart';
+
 void main() {
-  runApp(const ARBooksApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // App will always run in portrait mode
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+    runApp(const ARBooksApp());
+  });
+  //runApp(const ARBooksApp()); //Not needed anymore
 }
 
 class ARBooksApp extends StatelessWidget {
