@@ -36,7 +36,7 @@ class CategoryListPage extends StatelessWidget {
             },
           ),
           CategoryItem(
-            title: "Categeory Bumba",
+            title: "Category Bumba",
             imageUrl: "https://i.postimg.cc/DZr9Kysx/bumba-cover.jpg",
             abstract: "Bumba <Under Construction>",
             onTapped: () {},
