@@ -5,16 +5,18 @@
 //TODO refactor from hard coded books to dynamic books => see post_list.dart in de NYT app
 //TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst
 //bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
-import 'dart:developer';
 
-import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
-import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
 import 'package:flutter/material.dart';
 
-import 'package:just_audio/just_audio.dart';
-
-import '../pages/ardino.dart';
 import 'book_item.dart';
+
+// Wikitude
+import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
+import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
+import '../pages/ardino.dart';
+
+//audio player
+import 'package:just_audio/just_audio.dart';
 
 class BooksList extends StatefulWidget {
   const BooksList({Key? key}) : super(key: key);
@@ -32,20 +34,23 @@ class _BookListState extends State<BooksList> {
   @override
   void initState() {
     super.initState();
+    String category = "Nijntje"; //TODO replace with DB category
+    String audioUrl = "assets/audio/$category.mp3";
     player = AudioPlayer();
-    Future.delayed(
-        Duration.zero, () => player.setAsset('assets/audio/Nijntje.mp3'));
-    player.play();
+    player.setLoopMode(LoopMode.all);
+    Future.delayed(Duration.zero, () => player.setAsset(audioUrl));
   }
 
   @override
   void dispose() {
+    //dispose player
     player.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    player.play(); //Start player
     return Scaffold(
       body: GridView.count(
         childAspectRatio: (1 / .4),
@@ -61,7 +66,7 @@ class _BookListState extends State<BooksList> {
             abstract: "Nijntje in de speeltuin",
             onTapped: () {
               navigateToDinos();
-              const Text("Scan the Dino's!");
+              const Text("Scan de pagina");
             },
           ),
           BookItem(
@@ -94,8 +99,11 @@ class _BookListState extends State<BooksList> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const ArDinoPage()),
+                        ).then(
+                          (value) => setState(
+                              () {}), // For the player to start again after comming back from AR world
                         ),
-                        player.stop(),
+                        player.pause(), // Pause the music player
                       }
                     else
                       {
