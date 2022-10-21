@@ -11,7 +11,6 @@ void main() {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(const ARBooksApp());
   });
-  //runApp(const ARBooksApp()); //Not needed anymore
 }
 
 class ARBooksApp extends StatelessWidget {
