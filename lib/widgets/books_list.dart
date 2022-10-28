@@ -13,7 +13,7 @@ import 'book_item.dart';
 // Wikitude
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
-import '../pages/ardino.dart';
+import '../pages/arnijntje.dart';
 
 //audio player
 import 'package:just_audio/just_audio.dart';
@@ -65,7 +65,7 @@ class _BookListState extends State<BooksList> {
             imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
             abstract: "Nijntje in de speeltuin",
             onTapped: () {
-              navigateToDinos();
+              navigateToNijntje();
               const Text("Scan de pagina");
             },
           ),
@@ -86,8 +86,8 @@ class _BookListState extends State<BooksList> {
     );
   }
 
-  void navigateToDinos() {
-    debugPrint("Wij gaan naar dino's");
+  void navigateToNijntje() {
+    debugPrint("Wij gaan naar Nijntje");
 
     checkDeviceCompatibility().then((value) => {
           if (value.success)
@@ -98,7 +98,7 @@ class _BookListState extends State<BooksList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ArDinoPage()),
+                              builder: (context) => const ArNijntjePage()),
                         ).then(
                           (value) => setState(
                               () {}), // For the player to start again after comming back from AR world
