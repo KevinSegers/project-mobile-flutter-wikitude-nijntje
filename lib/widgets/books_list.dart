@@ -28,6 +28,7 @@ class BooksList extends StatefulWidget {
 class _BookListState extends State<BooksList> {
   //Wikitude
   List<String> features = ["image_tracking"];
+  bool sound = false;
 
   //Audio track
   late AudioPlayer player;
@@ -50,12 +51,29 @@ class _BookListState extends State<BooksList> {
 
   @override
   Widget build(BuildContext context) {
-    player.play(); //Start player
+    if (sound) {
+      player.play();
+    } //Start player
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            sound = !sound;
+            player.playing ? player.stop() : player.play();
+          });
+        },
+        backgroundColor: sound
+            ? const Color.fromARGB(255, 136, 243, 141)
+            : const Color.fromARGB(255, 251, 120, 120),
+        child:
+            sound ? const Icon(Icons.volume_up) : const Icon(Icons.volume_mute),
+      ),
       body: GridView.count(
         childAspectRatio: (1 / .4),
         primary: false,
-        padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+        padding:
+            const EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 60),
         crossAxisSpacing: 10,
         mainAxisSpacing: 0,
         crossAxisCount: 1,
@@ -68,6 +86,30 @@ class _BookListState extends State<BooksList> {
               navigateToNijntje();
               const Text("Scan de pagina");
             },
+          ),
+          BookItem(
+            title: "Boeken Nijntje",
+            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
+            abstract: "Nijntje in de speeltuin",
+            onTapped: () {},
+          ),
+          BookItem(
+            title: "Boeken Nijntje",
+            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
+            abstract: "Nijntje in de speeltuin",
+            onTapped: () {},
+          ),
+          BookItem(
+            title: "Boeken Nijntje",
+            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
+            abstract: "Nijntje in de speeltuin",
+            onTapped: () {},
+          ),
+          BookItem(
+            title: "Boeken Nijntje",
+            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
+            abstract: "Nijntje in de speeltuin",
+            onTapped: () {},
           ),
           BookItem(
             title: "Boeken Nijntje",
@@ -103,7 +145,7 @@ class _BookListState extends State<BooksList> {
                           (value) => setState(
                               () {}), // For the player to start again after comming back from AR world
                         ),
-                        player.pause(), // Pause the music player
+                        player.stop(), // Pause the music player
                       }
                     else
                       {
