@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../widgets/tabs/app_info_tab.dart';
 import '../widgets/tabs/home_tab.dart';
-import '../widgets/tabs/settings_tab.dart';
 
 // TODO make homepage tab with CategoryListPage, ADD FavoritesPage and SettingsPage and link to tabs
 //TODO make homepage stateful
@@ -18,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  List<Widget> data = [const HomeTab(), const InfoTab(), const SettingsTab()];
+  List<Widget> data = [const HomeTab(), const InfoTab()];
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +35,6 @@ class HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.info),
             label: "Info",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Settings",
           )
         ],
       ),

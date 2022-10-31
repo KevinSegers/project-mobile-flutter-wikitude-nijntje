@@ -7,7 +7,6 @@
 //bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
 
 import 'package:flutter/material.dart';
-import 'package:nijntje_is_alive/widgets/tabs/settings_tab.dart';
 
 import 'book_item.dart';
 
