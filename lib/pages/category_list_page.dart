@@ -3,8 +3,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../pages/books_by_category_list_page.dart';
-import 'category_item.dart';
+import 'books_by_category_list_page.dart';
+import '../widgets/category_item.dart';
 
 class CategoryListPage extends StatelessWidget {
   const CategoryListPage({Key? key}) : super(key: key);
@@ -29,8 +29,7 @@ class CategoryListPage extends StatelessWidget {
             imageUrl: "https://i.postimg.cc/3wpjLy5b/nijntje-cover.jpg",
             abstract: "Nijntje",
             onTapped: () {
-              Navigator.push(
-                context,
+              Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => const BooksByCategoryListPage()),
               );

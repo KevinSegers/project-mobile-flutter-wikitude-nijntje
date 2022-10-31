@@ -8,7 +8,7 @@ class BooksByCategoryListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("AR kinder boeken"),
+        title: const Text("AR kinder boeken"), //TODO vervangen door categorie
         centerTitle: true,
       ),
       body: const BooksList(),

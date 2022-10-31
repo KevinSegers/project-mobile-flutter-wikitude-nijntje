@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'category_list.dart';
+import '../../pages/category_list_page.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({Key? key}) : super(key: key);

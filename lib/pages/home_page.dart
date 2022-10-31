@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/category_list.dart';
-import '../widgets/app_info_tab.dart';
-import '../widgets/home_tab.dart';
+import '../widgets/tabs/app_info_tab.dart';
+import '../widgets/tabs/home_tab.dart';
+import '../widgets/tabs/settings_tab.dart';
 
 // TODO make homepage tab with CategoryListPage, ADD FavoritesPage and SettingsPage and link to tabs
 //TODO make homepage stateful
@@ -12,13 +12,13 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() {
-    return _HomePageState();
+  HomePageState createState() {
+    return HomePageState();
   }
 }
 
-class _HomePageState extends State<HomePage> {
-  List<Widget> data = [const HomeTab(), const InfoPage()];
+class HomePageState extends State<HomePage> {
+  List<Widget> data = [const HomeTab(), const InfoTab(), const SettingsTab()];
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +30,16 @@ class _HomePageState extends State<HomePage> {
         inactiveColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
+            icon: Icon(Icons.home),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.info),
+            icon: Icon(Icons.info),
             label: "Info",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Settings",
           )
         ],
       ),

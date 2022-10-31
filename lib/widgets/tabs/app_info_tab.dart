@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class InfoPage extends StatelessWidget {
-  const InfoPage({Key? key}) : super(key: key);
+class InfoTab extends StatelessWidget {
+  const InfoTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("AR kinder boeken"),
+        title: const Text("Info over de app"),
         centerTitle: true,
       ),
       body: Column(
