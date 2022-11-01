@@ -2,17 +2,88 @@ var World = {
   loaded: false,
   dinoSettings: {
     diplodocus: {
-      scale: 0.4,
+      scale: 0.05,
     },
     spinosaurus: {
-      scale: 0.004,
+      scale: 0.05,
     },
     triceratops: {
-      scale: 0.4,
+      scale: 0.05,
     },
     tyrannosaurus: {
-      scale: 0.4,
+      scale: 0.05,
     },
+
+    klimboom:{
+      scale: 0.001,
+      rotatex: 90,
+      rotatez: 180,
+      translatex: 0,
+      translatey: 0
+    }, 
+
+    auto:{
+      scale: 0.006,
+      rotatex: 270,
+      rotatez: 0,
+      translatex: -2,
+      translatey: -0.05 
+    },
+
+    nijntje:{
+      scale: 0.02,
+      rotatex: -90,
+      rotatez: 0,
+      translatex: -0.5,
+      translatey: -0.5,
+
+    }, 
+
+    glijbaan:{
+      scale: 0.5,
+      rotatex: -90,
+      rotatez: 0 ,
+      translatex: 0,
+      translatey: 0, 
+    },
+
+    schommel:{
+      scale: 0.01,
+      rotatex:  -90,
+      rotatez: 0,
+      translatex: 0,
+      translatey: 0, 
+    },
+
+    ringen:{
+      scale: 0.01,
+      rotatex:  -90,
+      rotatez: 0,
+      translatex: 0,
+      translatey: 0, 
+    }, 
+
+    trampoline:{
+      scale: 0.3,
+      rotatex: -90,
+      rotatez: 0 ,
+      translatex: 0,
+      translatey: -0.5, 
+    }, 
+
+    wip:{
+      scale: 0.5,
+      rotatex: -90,
+      rotatez: 0 ,
+      translatex: 0,
+      translatey: 0, 
+    },
+
+
+
+
+
+
   },
 
   init: function initFn() {
@@ -28,7 +99,7 @@ var World = {
             target name, it is possible to create an AR.ImageTrackable for every target in the target collection.
          */
     this.targetCollectionResource = new AR.TargetCollectionResource(
-      'assets/dinosaurs.wtc',
+      'assets/nijntje.wtc',
       {
         onError: World.onError,
       }
@@ -76,11 +147,49 @@ var World = {
         /*
                     Create 3D model based on which target was recognized.
                  */
-        var model = new AR.Model('assets/models/' + target.name + '.wt3', {
-          scale: World.dinoSettings[target.name].scale,
+      //  items =  JSON.parse(target.metadata.items);
+    //    metadat = JSON.parse(target.metadata)       
+        console.dir(target);
+        console.log(target.name);
+        console.log(target.resource);
+        console.log(target.creDat);
+        console.log()
+      //  console.log(metadat);       
+      //  console.log(items);       
+ 
+
+        // (target.name).forEach(element => {
+        //   var model = new AR.Model('assets/models/' + element + '.wt3', {
+        //     scale: World.dinoSettings[element].scale,
+        //     rotate:{
+        //       x: World.dinoSettings[element].rotatex,
+        //       z: World.dinoSettings[element].rotatez,
+        //     },
+        //     translate:{
+        //       x: World.dinoSettings[element].translatex,
+        //       y: World.dinoSettings[element].translatey
+        //     }, 
+        //     onError: World.onError,
+        //   }
+        //   );
+
+        //   this.addImageTargetCamDrawables(target, model);
+
+
+
+       // });            
+        var model = new AR.Model('assets/models/' + 'wip' + '.wt3', {
+       //   scale: World.dinoSettings[target.name].scale,
+          scale: 0.5,
           rotate: {
-            z: 180,
+            z: 0,
+            x: -90,
           },
+          translate: {
+            x: -0.5,
+            y: 0
+          },
+        
           onError: World.onError,
         });
 
