@@ -1,27 +1,44 @@
+ var ItemsPerPage = {
+    "page1":{
+      items: ["nijntje", "papaNijntje" ,"mamaNijntje"]},
+    "page2":{ 
+      items: ["nijntje","papaNijntje","auto","mamaNijntje" ]},
+    "page3":{
+      items:  ["nijntje", "papaNijntje","mamaNijntje"]
+    },
+    "page4":{
+      items:  ["nijntje", "schommel"]},
+    "page5":{
+      items: ["nijntje", "ringen"] },
+    "page6":{
+      items: ["nijntje","rekstok"]},
+    "page7":{
+      items: ["nijntje", "klimboom"]},
+    "page8":{
+      items: ["nijntje", "glijbaan"]},
+    "page9":{
+      items: ["nijntje", "wip", "papaNijntje"]
+    },
+    "page10":{
+      items: ["nijntje", "trampoline"]
+    },
+    "page11":{
+      items: ["nijntje","papaNijntje", "mamaNijntje"]
+    },
+    "page12":{
+      items: ["nijntje","papaNijntje","auto","mamaNijntje"]},
+  };
+
 var World = {
   loaded: false,
-  dinoSettings: {
-    diplodocus: {
-      scale: 0.05,
-    },
-    spinosaurus: {
-      scale: 0.05,
-    },
-    triceratops: {
-      scale: 0.05,
-    },
-    tyrannosaurus: {
-      scale: 0.05,
-    },
-
+  nijntjeSettings: {
     klimboom:{
-      scale: 0.001,
+      scale: 0.01,
       rotatex: 90,
       rotatez: 180,
       translatex: 0,
-      translatey: 0
+      translatey: -1
     }, 
-
     auto:{
       scale: 0.006,
       rotatex: 270,
@@ -30,8 +47,17 @@ var World = {
       translatey: -0.05 
     },
 
+    papaNijntje:{
+      scale: 0.2,
+      rotatex: -90,
+      rotatez: 0,
+      translatex: 0,
+      translatey: 0,
+
+    }, 
+
     nijntje:{
-      scale: 0.02,
+      scale: 0.008,
       rotatex: -90,
       rotatez: 0,
       translatex: -0.5,
@@ -43,31 +69,41 @@ var World = {
       scale: 0.5,
       rotatex: -90,
       rotatez: 0 ,
-      translatex: 0,
-      translatey: 0, 
+      translatex: -0.5,
+      translatey: -0.5, 
     },
 
     schommel:{
       scale: 0.01,
       rotatex:  -90,
       rotatez: 0,
-      translatex: 0,
-      translatey: 0, 
+      translatex: -0.3,
+      translatey: -0.3, 
     },
 
     ringen:{
       scale: 0.01,
       rotatex:  -90,
       rotatez: 0,
-      translatex: 0,
-      translatey: 0, 
+      translatex: -1,
+      translatey: -1,
     }, 
 
+    rekstok:{
+      scale: 0.01,
+      rotatex:  -90,
+      rotatez: 0,
+      translatex: -1,
+      translatey: -1,
+    }, 
+
+
+
     trampoline:{
-      scale: 0.3,
+      scale: 0.08,
       rotatex: -90,
       rotatez: 0 ,
-      translatex: 0,
+      translatex: -0.5,
       translatey: -0.5, 
     }, 
 
@@ -75,16 +111,12 @@ var World = {
       scale: 0.5,
       rotatex: -90,
       rotatez: 0 ,
-      translatex: 0,
-      translatey: 0, 
+      translatex: -1,
+      translatey: -1, 
     },
 
-
-
-
-
-
   },
+
 
   init: function initFn() {
     this.createOverlays();
@@ -116,7 +148,7 @@ var World = {
             to be set.
          */
     this.tracker = new AR.ImageTracker(this.targetCollectionResource, {
-      maximumNumberOfConcurrentlyTrackableTargets: 5, // a maximum of 5 targets can be tracked simultaneously
+      maximumNumberOfConcurrentlyTrackableTargets: 1, // a maximum of 5 targets can be tracked simultaneously
       /*
                 Disables extended range recognition.
                 The reason for this is that extended range recognition requires more processing power and with multiple
@@ -131,10 +163,19 @@ var World = {
     /*
             Pre-load models such that they are available in cache to avoid any slowdown upon first recognition.
          */
-    new AR.Model('assets/models/diplodocus.wt3');
-    new AR.Model('assets/models/spinosaurus.wt3');
-    new AR.Model('assets/models/triceratops.wt3');
-    new AR.Model('assets/models/tyrannosaurus.wt3');
+    new AR.Model('assets/models/auto.wt3');
+    new AR.Model('assets/models/glijbaan.wt3');
+    new AR.Model('assets/models/klimboom.wt3');
+    new AR.Model('assets/models/nijntje.wt3');
+    new AR.Model('assets/models/papaNijntje.wt3');
+   // new AR.Model('assets/models/mamaNijntje.wt3');
+    new AR.Model('assets/models/rekstok.wt3');
+    new AR.Model('assets/models/ringen.wt3');
+    new AR.Model('assets/models/schommel.wt3');
+    new AR.Model('assets/models/trampoline.wt3');
+    new AR.Model('assets/models/wip.wt3');
+
+
 
     /*
             Note that this time we use "*" as target name. That means that the AR.ImageTrackable will respond to
@@ -142,59 +183,57 @@ var World = {
             matchings. E.g. 'target_?' to reference 'target_1' through 'target_9' or 'target*' for any targets
             names that start with 'target'.
          */
-    this.dinoTrackable = new AR.ImageTrackable(this.tracker, '*', {
+    this.nijntjeTrackable = new AR.ImageTrackable(this.tracker, '*', {
       onImageRecognized: function (target) {
         /*
                     Create 3D model based on which target was recognized.
                  */
       //  items =  JSON.parse(target.metadata.items);
-    //    metadat = JSON.parse(target.metadata)       
-        console.dir(target);
-        console.log(target.name);
-        console.log(target.resource);
-        console.log(target.creDat);
-        console.log()
-      //  console.log(metadat);       
-      //  console.log(items);       
+    //    metadat = JSON.parse(target.metadata)
+      let targetPage = target.name;  
+        console.log(targetPage);   
+        console.log(ItemsPerPage[targetPage].items);
+        console.log(ItemsPerPage[targetPage].items[0]) ;    
+
  
 
-        // (target.name).forEach(element => {
-        //   var model = new AR.Model('assets/models/' + element + '.wt3', {
-        //     scale: World.dinoSettings[element].scale,
-        //     rotate:{
-        //       x: World.dinoSettings[element].rotatex,
-        //       z: World.dinoSettings[element].rotatez,
-        //     },
-        //     translate:{
-        //       x: World.dinoSettings[element].translatex,
-        //       y: World.dinoSettings[element].translatey
-        //     }, 
-        //     onError: World.onError,
-        //   }
-        //   );
+         (ItemsPerPage[targetPage].items).forEach(item => {
+           var model = new AR.Model('assets/models/' + item + '.wt3', {
+             scale: World.nijntjeSettings[item].scale,
+             rotate:{
+              x: World.nijntjeSettings[item].rotatex,
+              z: World.nijntjeSettings[item].rotatez,
+            },
+             translate:{
+               x: World.nijntjeSettings[item].translatex,
+               y: World.nijntjeSettings[item].translatey
+            }, 
+             onError: World.onError,
+           }
+           );
 
-        //   this.addImageTargetCamDrawables(target, model);
+         this.addImageTargetCamDrawables(target, model);
 
 
 
-       // });            
-        var model = new AR.Model('assets/models/' + 'wip' + '.wt3', {
-       //   scale: World.dinoSettings[target.name].scale,
-          scale: 0.5,
-          rotate: {
-            z: 0,
-            x: -90,
-          },
-          translate: {
-            x: -0.5,
-            y: 0
-          },
+       });            
+      //   var model = new AR.Model('assets/models/' + 'wip' + '.wt3', {
+      //  //   scale: World.nijntjeSettings[target.name].scale,
+      //     scale: 0.5,
+      //     rotate: {
+      //       z: 0,
+      //       x: -90,
+      //     },
+      //     translate: {
+      //       x: -0.5,
+      //       y: 0
+      //     },
         
-          onError: World.onError,
-        });
+      //     onError: World.onError,
+      //   });
 
         /* Adds the model as augmentation for the currently recognized target. */
-        this.addImageTargetCamDrawables(target, model);
+       // this.addImageTargetCamDrawables(target, model);
 
         World.hideInfoBar();
       },
