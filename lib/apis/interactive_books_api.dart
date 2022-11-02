@@ -8,7 +8,7 @@ class InteractiveBooksApi {
 
 //GetAllCategories
   static Future<List<Category>> fetchCategories() async {
-    var url = Uri.http(edgeService, '/interactivebooks/categories');
+    var url = Uri.http(edgeService, '/interactivebooks/categorieswithurls');
 
     final response = await http.get(url);
 

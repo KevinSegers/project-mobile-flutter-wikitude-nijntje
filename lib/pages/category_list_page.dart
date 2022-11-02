@@ -16,8 +16,7 @@ class CategoryListPage extends StatefulWidget {
 }
 
 class _CategoryListPageState extends State<CategoryListPage> {
-  List<Category> categoryList = [];
-  int count = 0;
+  late List<Category> categoryList = <Category>[];
 
   @override
   void initState() {
@@ -29,7 +28,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     InteractiveBooksApi.fetchCategories().then((result) {
       setState(() {
         categoryList = result;
-        count = categoryList.length;
+        //debugPrint(result[0].url.toString());
       });
     });
   }
@@ -37,38 +36,31 @@ class _CategoryListPageState extends State<CategoryListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.count(
-        primary: false,
+      body: _categoryItems(),
+    );
+  }
+
+  GridView _categoryItems() {
+    return GridView.builder(
         padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 30,
-        crossAxisCount: 2,
-        children: <Widget>[
-          CategoryItem(
-            title: "Category Nijntje",
-            imageUrl: "https://i.postimg.cc/3wpjLy5b/nijntje-cover.jpg",
-            abstract: "Nijntje",
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 1 / 1,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 30),
+        itemCount: categoryList.length,
+        itemBuilder: (context, position) {
+          return CategoryItem(
+            title: categoryList[position].label,
+            imageUrl: categoryList[position].url,
+            label: categoryList[position].label,
             onTapped: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => const BooksByCategoryListPage()),
               );
             },
-          ),
-          CategoryItem(
-            title: "Category Bumba",
-            imageUrl: "https://i.postimg.cc/DZr9Kysx/bumba-cover.jpg",
-            abstract: "Bumba <Wordt verwacht>",
-            onTapped: () {},
-          ),
-          CategoryItem(
-            title: "Category Dribbel",
-            imageUrl: "https://i.postimg.cc/ydRvMQqB/dribbel-cover.jpg",
-            abstract: "Dribbel <Wordt verwacht>",
-            onTapped: () {},
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
