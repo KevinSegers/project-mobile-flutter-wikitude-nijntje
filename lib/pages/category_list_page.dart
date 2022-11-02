@@ -3,52 +3,64 @@
 
 import 'package:flutter/material.dart';
 
+import '../apis/interactive_books_api.dart';
+import '../models/category.dart';
 import 'books_by_category_list_page.dart';
 import '../widgets/category_item.dart';
 
-class CategoryListPage extends StatelessWidget {
-  const CategoryListPage({Key? key}) : super(key: key);
+class CategoryListPage extends StatefulWidget {
+  const CategoryListPage({super.key});
 
-//TODO refactor from hard coded categories to dynamic categories => see post_list.dart in de NYT app
-//TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst
-//bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
-//TODO check every category for content => if not available => disable click action and add a <Wordt verwacht> text
+  @override
+  State<CategoryListPage> createState() => _CategoryListPageState();
+}
+
+class _CategoryListPageState extends State<CategoryListPage> {
+  late List<Category> categoryList = <Category>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _getCategories();
+  }
+
+  void _getCategories() {
+    InteractiveBooksApi.fetchCategories().then((result) {
+      setState(() {
+        categoryList = result;
+        //debugPrint(result[0].url.toString());
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.count(
-        primary: false,
+      body: _categoryItems(),
+    );
+  }
+
+  GridView _categoryItems() {
+    return GridView.builder(
         padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 30,
-        crossAxisCount: 2,
-        children: <Widget>[
-          CategoryItem(
-            title: "Category Nijntje",
-            imageUrl: "https://i.postimg.cc/3wpjLy5b/nijntje-cover.jpg",
-            abstract: "Nijntje",
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 1 / 1,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 30),
+        itemCount: categoryList.length,
+        itemBuilder: (context, position) {
+          return CategoryItem(
+            title: categoryList[position].label,
+            imageUrl: categoryList[position].url,
+            label: categoryList[position].label,
             onTapped: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => const BooksByCategoryListPage()),
               );
             },
-          ),
-          CategoryItem(
-            title: "Category Bumba",
-            imageUrl: "https://i.postimg.cc/DZr9Kysx/bumba-cover.jpg",
-            abstract: "Bumba <Wordt verwacht>",
-            onTapped: () {},
-          ),
-          CategoryItem(
-            title: "Category Dribbel",
-            imageUrl: "https://i.postimg.cc/ydRvMQqB/dribbel-cover.jpg",
-            abstract: "Dribbel <Wordt verwacht>",
-            onTapped: () {},
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
