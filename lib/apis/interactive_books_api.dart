@@ -6,8 +6,8 @@ import '../models/category.dart';
 class InteractiveBooksApi {
   static String edgeService = '192.168.0.199:8050';
 
-//GetAllCategories
-  static Future<List<Category>> fetchCategories() async {
+//FetchCategoriesWithUrls
+  static Future<List<Category>> fetchCategoriesWithUrls() async {
     var url = Uri.http(edgeService, '/interactivebooks/categorieswithurls');
 
     final response = await http.get(url);
