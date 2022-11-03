@@ -25,7 +25,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   }
 
   void _getCategories() {
-    InteractiveBooksApi.fetchCategories().then((result) {
+    InteractiveBooksApi.fetchCategoriesWithUrls().then((result) {
       setState(() {
         categoryList = result;
         //debugPrint(result[0].url.toString());
