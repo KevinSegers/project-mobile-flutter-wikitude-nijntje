@@ -51,9 +51,8 @@ class _CategoryListPageState extends State<CategoryListPage> {
         itemCount: categoryList.length,
         itemBuilder: (context, position) {
           return CategoryItem(
-            title: categoryList[position].label,
             imageUrl: categoryList[position].url,
-            label: categoryList[position].label,
+            categoryName: categoryList[position].label,
             onTapped: () {
               Navigator.of(context).push(
                 MaterialPageRoute(

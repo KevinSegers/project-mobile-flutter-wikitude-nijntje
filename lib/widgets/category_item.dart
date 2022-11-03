@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 typedef MyCallback = void Function();
 
 class CategoryItem extends StatelessWidget {
-  final String title, imageUrl, label;
+  final String imageUrl, categoryName;
   final MyCallback onTapped;
 
   const CategoryItem(
       {Key? key,
-      required this.title,
       required this.imageUrl,
-      required this.label,
+      required this.categoryName,
       required this.onTapped})
       : super(key: key);
 
@@ -36,7 +35,7 @@ class CategoryItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: Text(
-              label,
+              categoryName,
               style: const TextStyle(color: Colors.black54, fontSize: 20),
             ),
           )
