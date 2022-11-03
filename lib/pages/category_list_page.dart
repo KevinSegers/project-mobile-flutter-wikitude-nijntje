@@ -9,7 +9,9 @@ import 'books_by_category_list_page.dart';
 import '../widgets/category_item.dart';
 
 class CategoryListPage extends StatefulWidget {
-  const CategoryListPage({super.key});
+  const CategoryListPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<CategoryListPage> createState() => _CategoryListPageState();
@@ -56,7 +58,9 @@ class _CategoryListPageState extends State<CategoryListPage> {
             onTapped: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (context) => const BooksByCategoryListPage()),
+                    builder: (context) => BooksByCategoryListPage(
+                          category: categoryList[position].label,
+                        )),
               );
             },
           );

@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:nijntje_is_alive/widgets/books_list.dart';
 
-class BooksByCategoryListPage extends StatelessWidget {
-  const BooksByCategoryListPage({Key? key}) : super(key: key);
+class BooksByCategoryListPage extends StatefulWidget {
+  final String category;
+  const BooksByCategoryListPage({Key? key, required this.category})
+      : super(key: key);
 
   @override
+  State<BooksByCategoryListPage> createState() =>
+      _BooksByCategoryListPageState();
+}
+
+class _BooksByCategoryListPageState extends State<BooksByCategoryListPage> {
+  @override
   Widget build(BuildContext context) {
+    String category = widget.category;
     return Scaffold(
       appBar: AppBar(
         title: const Text("AR kinder boeken"), //TODO vervangen door categorie
         centerTitle: true,
       ),
-      body: const BooksList(),
+      body: BooksList(
+        category: category,
+      ),
     );
   }
 }

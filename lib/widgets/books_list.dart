@@ -20,7 +20,9 @@ import '../pages/ardino.dart';
 import 'package:just_audio/just_audio.dart';
 
 class BooksList extends StatefulWidget {
-  const BooksList({Key? key}) : super(key: key);
+  final String category;
+
+  const BooksList({Key? key, required this.category}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _BookListState();
@@ -36,8 +38,8 @@ class _BookListState extends State<BooksList> {
   @override
   void initState() {
     super.initState();
-    String category = "Nijntje"; //TODO replace with DB category
-    String audioUrl = "assets/audio/$category.mp3";
+    String currentCategory = widget.category; //TODO replace with DB category
+    String audioUrl = "assets/audio/$currentCategory.mp3";
     player = AudioPlayer();
     player.setLoopMode(LoopMode.all);
     Future.delayed(Duration.zero, () => player.setAsset(audioUrl));
