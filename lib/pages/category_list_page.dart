@@ -26,6 +26,13 @@ class _CategoryListPageState extends State<CategoryListPage> {
     _getCategories();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _categoryItems(),
+    );
+  }
+
   void _getCategories() {
     InteractiveBooksApi.fetchCategoriesWithUrls().then((result) {
       setState(() {
@@ -33,13 +40,6 @@ class _CategoryListPageState extends State<CategoryListPage> {
         //debugPrint(result[0].url.toString());
       });
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _categoryItems(),
-    );
   }
 
   GridView _categoryItems() {
