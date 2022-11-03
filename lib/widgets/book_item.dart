@@ -26,7 +26,7 @@ class BookItem extends StatelessWidget {
       {Key? key, //TODO add DB available and favorite
       required this.title,
       required this.imageUrl,
-      required this.abstract,
+      required this.abstract, //TODO remove abstract
       required this.onTapped})
       : super(key: key);
 

@@ -3,8 +3,7 @@
 // eventueel like button
 
 //TODO refactor from hard coded books to dynamic books => see post_list.dart in de NYT app
-//TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst
-//bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
+//TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
 
 import 'package:flutter/material.dart';
 
@@ -38,7 +37,7 @@ class _BookListState extends State<BooksList> {
   @override
   void initState() {
     super.initState();
-    String currentCategory = widget.category; //TODO replace with DB category
+    String currentCategory = widget.category;
     String audioUrl = "assets/audio/$currentCategory.mp3";
     player = AudioPlayer();
     player.setLoopMode(LoopMode.all);

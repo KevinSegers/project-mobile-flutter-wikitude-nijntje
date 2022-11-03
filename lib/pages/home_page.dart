@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import '../widgets/tabs/app_info_tab.dart';
 import '../widgets/tabs/home_tab.dart';
 
-// TODO make homepage tab with CategoryListPage, ADD FavoritesPage and SettingsPage and link to tabs
-//TODO make homepage stateful
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
