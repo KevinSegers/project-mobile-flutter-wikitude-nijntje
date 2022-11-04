@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nijntje_is_alive/widgets/books_list.dart';
 
+import '../apis/interactive_books_api.dart';
+import '../models/books_by_category.dart';
+
 class BooksByCategoryListPage extends StatefulWidget {
   final String category;
   const BooksByCategoryListPage({Key? key, required this.category})
@@ -12,6 +15,23 @@ class BooksByCategoryListPage extends StatefulWidget {
 }
 
 class _BooksByCategoryListPageState extends State<BooksByCategoryListPage> {
+  late List<BooksByCategory> bookList = <BooksByCategory>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _getBooksByCategory();
+  }
+
+  void _getBooksByCategory() {
+    InteractiveBooksApi.fetchBooksByCategory(widget.category).then((result) {
+      setState(() {
+        bookList = result;
+        //debugPrint(result[0].bookTitle.toString());
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     String category = widget.category;
