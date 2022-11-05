@@ -1,13 +1,12 @@
-// photoWidget met Title 1/8 bv of Wordt verwacht
-// click action naar wikitude bij beschikbare boeken
-// eventueel like button
-
-//TODO refactor from hard coded books to dynamic books => see post_list.dart in de NYT app
-//TODO klikbare items met functie die controleert op beschikbaarheid => weergeven in tekst bij het item en bij klikken popup ofzo dat het item nog niet beschikbaar is
-
 import 'package:flutter/material.dart';
 
+import '../apis/interactive_books_api.dart';
+import '../models/books_by_category.dart';
 import 'book_item.dart';
+
+// TODO Favorite aanpasbaar maken
+// TODO images bij andere categorieën nakijken
+// TODO klikbaar enkel bij Beschikbaar
 
 // Wikitude
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
@@ -20,7 +19,6 @@ import 'package:just_audio/just_audio.dart';
 
 class BooksList extends StatefulWidget {
   final String category;
-
   const BooksList({Key? key, required this.category}) : super(key: key);
 
   @override
@@ -28,20 +26,39 @@ class BooksList extends StatefulWidget {
 }
 
 class _BookListState extends State<BooksList> {
+  late List<BooksByCategory> bookList = <BooksByCategory>[];
+
   //Wikitude
   List<String> features = ["image_tracking"];
+
+  //Sound
   bool sound = false;
 
   //Audio track
   late AudioPlayer player;
+
   @override
   void initState() {
     super.initState();
+
     String currentCategory = widget.category;
+    _getBooksByCategory(currentCategory);
+
+    //Audio
     String audioUrl = "assets/audio/$currentCategory.mp3";
     player = AudioPlayer();
     player.setLoopMode(LoopMode.all);
     Future.delayed(Duration.zero, () => player.setAsset(audioUrl));
+  }
+
+  void _getBooksByCategory(currentCategory) {
+    InteractiveBooksApi.fetchBooksByCategory(currentCategory).then((result) {
+      setState(() {
+        bookList = result;
+        String title = bookList[0].title;
+        //debugPrint("!!!!!!!!!!!!!!!!!!!$title");
+      });
+    });
   }
 
   @override
@@ -53,17 +70,15 @@ class _BookListState extends State<BooksList> {
 
   @override
   Widget build(BuildContext context) {
+    //Start player
     if (sound) {
       player.play();
-    } //Start player
+    }
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            sound = !sound;
-            player.playing ? player.stop() : player.play();
-          });
+          _soundControl();
         },
         backgroundColor: sound
             ? const Color.fromARGB(255, 136, 243, 141)
@@ -71,63 +86,33 @@ class _BookListState extends State<BooksList> {
         child:
             sound ? const Icon(Icons.volume_up) : const Icon(Icons.volume_mute),
       ),
-      body: GridView.count(
-        childAspectRatio: (1 / .4),
-        primary: false,
-        padding:
-            const EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 60),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 0,
-        crossAxisCount: 1,
-        children: <Widget>[
-          BookItem(
-            title: "Boeken Nijntje",
-            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
-            abstract: "Nijntje in de speeltuin",
+      body: _bookListItems(),
+    );
+  }
+
+  ListView _bookListItems() {
+    return ListView.builder(
+        padding: const EdgeInsets.only(top: 20, left: 20, bottom: 100),
+        itemCount: bookList.length,
+        itemBuilder: (context, position) {
+          return BookItem(
+            imageUrl: bookList[position].coverImageUrl,
+            title: bookList[position].title,
+            available: bookList[position].available,
+            favorite: bookList[position].favorite,
             onTapped: () {
               navigateToNijntje();
               const Text("Scan de pagina");
             },
-          ),
-          BookItem(
-            title: "Boeken Nijntje",
-            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
-            abstract: "Nijntje in de speeltuin",
-            onTapped: () {},
-          ),
-          BookItem(
-            title: "Boeken Nijntje",
-            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
-            abstract: "Nijntje in de speeltuin",
-            onTapped: () {},
-          ),
-          BookItem(
-            title: "Boeken Nijntje",
-            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
-            abstract: "Nijntje in de speeltuin",
-            onTapped: () {},
-          ),
-          BookItem(
-            title: "Boeken Nijntje",
-            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
-            abstract: "Nijntje in de speeltuin",
-            onTapped: () {},
-          ),
-          BookItem(
-            title: "Boeken Nijntje",
-            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
-            abstract: "Nijntje in de speeltuin",
-            onTapped: () {},
-          ),
-          BookItem(
-            title: "Boeken Nijntje",
-            imageUrl: "https://i.postimg.cc/RFrDZ6zc/Nijntjeindespeeltuin.jpg",
-            abstract: "Nijntje in de speeltuin",
-            onTapped: () {},
-          ),
-        ],
-      ),
-    );
+          );
+        });
+  }
+
+  void _soundControl() {
+    setState(() {
+      sound = !sound;
+      player.playing ? player.stop() : player.play();
+    });
   }
 
   void navigateToNijntje() {
