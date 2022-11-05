@@ -109,7 +109,7 @@ class _BookListState extends State<BooksList> {
                       textAlign: TextAlign.center,
                     ),
                     content: const Text(
-                      'Dit boek is nog niet beschikbaar, \n even geduld aub.',
+                      'Dit boek is nog niet beschikbaar. \n We houden je op de hoogte.',
                       textAlign: TextAlign.center,
                     ),
                     actions: <Widget>[

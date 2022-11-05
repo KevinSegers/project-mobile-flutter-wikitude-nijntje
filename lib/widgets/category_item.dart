@@ -21,25 +21,43 @@ class CategoryItem extends StatelessWidget {
       onTap: () {
         onTapped();
       },
-      child: Column(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image.network(
-              imageUrl,
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
+      child: Container(
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10), //border corner radius
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5), //color of shadow
+              spreadRadius: 5, //spread radius
+              blurRadius: 7, // blur radius
+              offset: const Offset(0, 2), // changes position of shadow
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Text(
-              categoryName,
-              style: const TextStyle(color: Colors.black54, fontSize: 20),
+          ],
+        ),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.network(
+                  imageUrl,
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Text(
+                categoryName,
+                style: const TextStyle(color: Colors.black54, fontSize: 20),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
