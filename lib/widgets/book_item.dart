@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 typedef MyCallback = void Function();
 
 class BookItem extends StatelessWidget {
-  final String title, imageUrl, abstract;
+  final String title, imageUrl;
+  final bool available, favorite;
   final MyCallback onTapped;
-  final available = false; //TODO replace with DB availability
-  final favorite = false; //TODO replace with DB favorite
 
   static IconButton filledStar = IconButton(
       iconSize: 30,
@@ -26,7 +25,8 @@ class BookItem extends StatelessWidget {
       {Key? key, //TODO add DB available and favorite
       required this.title,
       required this.imageUrl,
-      required this.abstract, //TODO remove abstract
+      required this.available,
+      required this.favorite,
       required this.onTapped})
       : super(key: key);
 
@@ -46,8 +46,8 @@ class BookItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.network(
                   imageUrl,
-                  height: 120,
-                  width: 120,
+                  height: 100,
+                  width: 100,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -60,20 +60,26 @@ class BookItem extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  abstract,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  textAlign: TextAlign.end,
-                  available ? "Beschikbaar" : "Wordt verwacht",
-                  style: const TextStyle(color: Colors.black, fontSize: 14),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    textAlign: TextAlign.end,
+                    available ? "Beschikbaar" : "Wordt verwacht",
+                    style: const TextStyle(color: Colors.black, fontSize: 14),
+                  ),
                 ),
                 const SizedBox(
                   height: 5,
