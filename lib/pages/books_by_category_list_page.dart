@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nijntje_is_alive/widgets/books_list.dart';
-
-import '../apis/interactive_books_api.dart';
 import '../models/books_by_category.dart';
 
 class BooksByCategoryListPage extends StatefulWidget {
