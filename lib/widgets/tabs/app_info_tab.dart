@@ -18,7 +18,7 @@ class InfoTab extends StatelessWidget {
             child: Column(
               children: const <Widget>[
                 Text(
-                  "Kies een boek van je favoriet personage en zie de avontueren die ze beleven tot leven komen!",
+                  "Kies een boek van je favoriet personage en zie de avonturen die ze beleven tot leven komen!",
                   style: TextStyle(fontSize: 18, height: 2),
                 ),
                 SizedBox(height: 15),
