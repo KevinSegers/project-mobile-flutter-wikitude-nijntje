@@ -23,6 +23,11 @@ class InfoTab extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 Text(
+                  "Om de app te kunnen gebruiken heb je toegang tot het internet nodig.",
+                  style: TextStyle(fontSize: 18, height: 2),
+                ),
+                SizedBox(height: 15),
+                Text(
                   "Deze app werd ontwikkeld voor het vak Mobile development door Kevin Segers en Michal Davidse.",
                   style: TextStyle(fontSize: 18, height: 2),
                 ),

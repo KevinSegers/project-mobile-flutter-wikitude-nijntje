@@ -37,10 +37,10 @@ var World = {
       scale: 0.006,
       rotatex: 0,
       rotatey: 0,
-      rotatez: -90,
-      translatex: -3.5,
-      translatey: -1, 
-      translatez: -2
+      rotatez: 0,
+      translatex: -3,
+      translatey: -0.5, 
+      translatez: -1
     },
 
     papaNijntje:{
@@ -64,13 +64,13 @@ var World = {
     },
 
     nijntje:{
-      scale: 0.006,
+      scale: 0.01,
       rotatex: 0,
       rotatey: 0,
       rotatez: 0,
       translatex: -0.25,
       translatey: -0.5,
-      translatez: 0
+      translatez: -0.5
     }, 
 
     schommel:{
@@ -98,8 +98,8 @@ var World = {
       rotatex:  0,
       rotatey: 0,
       rotatez: 0,
-      translatex: -0.5,
-      translatey: 1,
+      translatex: -0.2,
+      translatey: 0.2,
       translatez: 0
     }, 
     
@@ -108,8 +108,8 @@ var World = {
       rotatex: 0,
       rotatey: 0,
       rotatez: 180,
-      translatex: 0.1,
-      translatey: 0.8, 
+      translatex: -0.1,
+      translatey: 1, 
       translatez: -1
     }, 
 
@@ -200,8 +200,6 @@ var World = {
     new AR.Model('assets/models/schommel.wt3');
     new AR.Model('assets/models/trampoline.wt3');
     new AR.Model('assets/models/wip.wt3');
-    var nijntje
-
 
 
     /*
@@ -249,23 +247,21 @@ var World = {
       animationGroup.start(-1);
     }
 
-    else if(page==="page2"){
+    else if(page==="page2" || page==="page12"){
       if(item ==="auto"){
-        distance = 0.05
-        // var carTurningFrontRotation = new AR.PropertyAnimation(model, "rotate.z", 0, 270, 5000);  
-        // var carTurningFrontTranslationX = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX+distance*1, 5000);
-        // var carTurningFrontTranslationY = new AR.PropertyAnimation(model, "translate.y", offsetY, offsetY+distance*-1, 5000);
-        // var carTurningFront = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [carTurningFrontRotation, carTurningFrontTranslationX, carTurningFrontTranslationY]);
-         var carRidingFront = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX+distance, 4000);
-//        var carRidingFrontRotation = new AR.PropertyAnimation(model, "rotate.z",0 ,0, 4000);
-     //   var carRiding= new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [carRidingFront, carRidingFrontRotation]);
-        // var carTurningRightRotation = new AR.PropertyAnimation(model, "rotate.z", -90, 0, 3000);
-        // var carTurningRightTranslationY = new AR.PropertyAnimation(model, "translate.y", offsetY-0.5, offsetY-0.5, 3000);
-        // var carTurningRightTranslationX = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX, 3000);
-        // var carTurningRight =  new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [carTurningRightRotation, carTurningRightTranslationX, carTurningRightTranslationY]);
-        // var carWaiting = new AR.PropertyAnimation(model, "rotate.z", 0, 0, 2000);
-        // var carRidingRight = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX +3, 4000);
-         var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [carRidingFront]);
+        var riding = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX+1, 4500);
+        var parking = new AR.PropertyAnimation(model, "translate.x", offsetX+1, offsetX+1, 2000);
+        var riding2 = new AR.PropertyAnimation(model, "translate.x", offsetX+1, offsetX+3, 5000);
+        var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [riding, parking, riding2]);
+        animationGroup.start(-1);
+      }
+      else{
+        var walkingrotate = new AR.PropertyAnimation(model, "translate.y", offsetY, offsetY+0.8 ,5000); 
+        var walking = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX-0.18, 5000);
+        var walkingToCar = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [walkingrotate, walking]);
+        var steppingInCar = new AR.PropertyAnimation(model, "scale", null, 0, 0);
+        var steppingInCarWaiting = new AR.PropertyAnimation(model, "translate.x", offsetX-0.18, offsetX-0.18, 1000);
+        var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [walkingToCar, steppingInCarWaiting, steppingInCar]);
         animationGroup.start(-1);
       }
       
@@ -281,15 +277,13 @@ var World = {
         animationGroup.start(-1);
     }
 
-    else if(page ==="page4"){
+    else if(page ==="page4" || page ==="page5" ){
       if(item ==="nijntje"){
-        var nijntjerotateToLeftrotation = new AR.PropertyAnimation(model, "rotate.z", null , 180 , 2000);
-        var nijntjerotateToLefTranslationX = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX, 2000);
-        var nijntjerotateToLefTranslationY = new AR.PropertyAnimation(model, "translate.y", offsetY, offsetY-1, 2000);
-        var nijntjerotateToLeft = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [nijntjerotateToLeftrotation, nijntjerotateToLefTranslationX, nijntjerotateToLefTranslationY]);        var walking = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX-1.75, 3000);
-        var rotateToRight = new AR.PropertyAnimation(model, "rotate.z", null , 45 , 2000);
-        var walking2 = new AR.PropertyAnimation(model, "translate.x", offsetX-1.75, -0.3, 3000);
-        var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [nijntjerotateToLeft, walking, rotateToRight, walking2]);
+        var walkingTranslateY = new AR.PropertyAnimation(model, "translate.y", offsetY, offsetY+1.2, 5000);
+        var walkingTranslateX = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX+1, 5000);       
+        var walkingRotate = new AR.PropertyAnimation(model, "rotate.z", null , 180 , 2000);
+        var walking = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [walkingTranslate, walkingRotate])
+        var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [ walking ]);
         animationGroup.start(-1);
 
 
