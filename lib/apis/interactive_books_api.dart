@@ -5,7 +5,11 @@ import '../models/books_by_category.dart';
 import '../models/category.dart';
 
 class InteractiveBooksApi {
-  static String edgeService = '192.168.0.199:8050';
+  //Kevin
+  //static String edgeService = '192.168.0.199:8050';
+
+  //michal
+  static String edgeService = 'chubby-hands-grin-84-197-131-83.loca.lt';
 
   //FetchCategoriesWithUrls
   static Future<List<Category>> fetchCategoriesWithUrls() async {
