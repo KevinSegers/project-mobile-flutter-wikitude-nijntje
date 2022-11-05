@@ -22,7 +22,7 @@ class BookItem extends StatelessWidget {
       onPressed: () {});
 
   const BookItem(
-      {Key? key, //TODO add DB available and favorite
+      {Key? key,
       required this.title,
       required this.imageUrl,
       required this.available,
