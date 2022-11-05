@@ -88,7 +88,8 @@ class _BookListState extends State<BooksList> {
 
   ListView _bookListItems() {
     return ListView.builder(
-        padding: const EdgeInsets.only(top: 20, left: 20, bottom: 100),
+        padding:
+            const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 100),
         itemCount: bookList.length,
         itemBuilder: (context, position) {
           return BookItem(

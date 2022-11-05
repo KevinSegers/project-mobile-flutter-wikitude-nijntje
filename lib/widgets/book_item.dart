@@ -33,63 +33,79 @@ class BookItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        onTapped();
-      },
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 0,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  imageUrl,
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.fill,
+        onTap: () {
+          onTapped();
+        },
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          margin: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10), //border corner radius
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), //color of shadow
+                spreadRadius: 5, //spread radius
+                blurRadius: 7, // blur radius
+                offset: const Offset(0, 2), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10, left: 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.network(
+                      imageUrl,
+                      height: 80,
+                      width: 80,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        textAlign: TextAlign.end,
+                        available ? "Beschikbaar" : "Wordt verwacht",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 14),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    favorite ? filledStar : emptyStar
+                  ],
+                ),
+              )
+            ],
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    textAlign: TextAlign.end,
-                    available ? "Beschikbaar" : "Wordt verwacht",
-                    style: const TextStyle(color: Colors.black, fontSize: 14),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                favorite ? filledStar : emptyStar
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+        ));
   }
 }
