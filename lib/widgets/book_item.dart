@@ -36,6 +36,8 @@ class BookItem extends StatelessWidget {
         onTap: () {
           onTapped();
         },
+
+        //Container with boxShadow
         child: Container(
           padding: const EdgeInsets.all(5),
           margin: const EdgeInsets.all(10),
@@ -53,6 +55,7 @@ class BookItem extends StatelessWidget {
           ),
           child: Row(
             children: <Widget>[
+              //Image
               Expanded(
                 flex: 0,
                 child: Padding(
@@ -68,6 +71,7 @@ class BookItem extends StatelessWidget {
                   ),
                 ),
               ),
+
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,6 +79,8 @@ class BookItem extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
+
+                    //Title
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
@@ -88,6 +94,8 @@ class BookItem extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
+
+                    //Availability
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
@@ -100,6 +108,8 @@ class BookItem extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
+
+                    //Favorite star
                     favorite ? filledStar : emptyStar
                   ],
                 ),
