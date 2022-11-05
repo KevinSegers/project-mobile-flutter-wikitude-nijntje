@@ -5,8 +5,6 @@ import '../models/books_by_category.dart';
 import 'book_item.dart';
 
 // TODO Favorite aanpasbaar maken
-// TODO images bij andere categorieën nakijken
-// TODO klikbaar enkel bij Beschikbaar
 
 // Wikitude
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
@@ -55,8 +53,6 @@ class _BookListState extends State<BooksList> {
     InteractiveBooksApi.fetchBooksByCategory(currentCategory).then((result) {
       setState(() {
         bookList = result;
-        String title = bookList[0].title;
-        //debugPrint("!!!!!!!!!!!!!!!!!!!$title");
       });
     });
   }
@@ -101,8 +97,30 @@ class _BookListState extends State<BooksList> {
             available: bookList[position].available,
             favorite: bookList[position].favorite,
             onTapped: () {
-              navigateToNijntje();
-              const Text("Scan de pagina");
+              if (bookList[position].available) {
+                navigateToNijntje();
+                const Text("Scan de pagina");
+              } else {
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      'Beschibaarheid',
+                      textAlign: TextAlign.center,
+                    ),
+                    content: const Text(
+                      'Dit boek is nog niet beschikbaar, \n even geduld aub.',
+                      textAlign: TextAlign.center,
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              }
             },
           );
         });
