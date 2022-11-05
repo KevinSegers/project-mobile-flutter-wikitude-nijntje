@@ -18,21 +18,6 @@ class _BooksByCategoryListPageState extends State<BooksByCategoryListPage> {
   late List<BooksByCategory> bookList = <BooksByCategory>[];
 
   @override
-  void initState() {
-    super.initState();
-    _getBooksByCategory();
-  }
-
-  void _getBooksByCategory() {
-    InteractiveBooksApi.fetchBooksByCategory(widget.category).then((result) {
-      setState(() {
-        bookList = result;
-        //debugPrint(result[0].bookTitle.toString());
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     String category = widget.category;
     return Scaffold(
