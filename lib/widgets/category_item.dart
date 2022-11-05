@@ -43,8 +43,8 @@ class CategoryItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.network(
                   imageUrl,
-                  height: 80,
-                  width: 80,
+                  height: 70,
+                  width: 70,
                   fit: BoxFit.cover,
                 ),
               ),
