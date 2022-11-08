@@ -9,7 +9,6 @@ import 'book_item.dart';
 // Wikitude
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
-//import '../pages/arnijntje.dart';
 import '../pages/ardino.dart';
 
 //audio player
@@ -17,7 +16,11 @@ import 'package:just_audio/just_audio.dart';
 
 class BooksList extends StatefulWidget {
   final String category;
-  const BooksList({Key? key, required this.category}) : super(key: key);
+
+  const BooksList({
+    Key? key,
+    required this.category,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _BookListState();
