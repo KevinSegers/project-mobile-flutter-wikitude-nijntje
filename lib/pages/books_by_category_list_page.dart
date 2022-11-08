@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nijntje_is_alive/widgets/books_list.dart';
-import '../models/books_by_category.dart';
 
 class BooksByCategoryListPage extends StatefulWidget {
   final String category;
@@ -13,8 +12,6 @@ class BooksByCategoryListPage extends StatefulWidget {
 }
 
 class _BooksByCategoryListPageState extends State<BooksByCategoryListPage> {
-  late List<BooksByCategory> bookList = <BooksByCategory>[];
-
   @override
   Widget build(BuildContext context) {
     String category = widget.category;
