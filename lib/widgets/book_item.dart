@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'favorite_item.dart';
+
 typedef MyCallback = void Function();
 
 class BookItem extends StatelessWidget {
@@ -9,26 +11,14 @@ class BookItem extends StatelessWidget {
   final bool available, favorite;
   final MyCallback onTapped;
 
-  static IconButton filledStar = IconButton(
-      iconSize: 30,
-      color: Colors.yellow,
-      icon: const Icon(Icons.star),
-      onPressed: () {});
-
-  static IconButton emptyStar = IconButton(
-      iconSize: 30,
-      color: Colors.yellow,
-      icon: const Icon(Icons.star_outline_outlined),
-      onPressed: () {});
-
-  const BookItem(
-      {Key? key,
-      required this.title,
-      required this.imageUrl,
-      required this.available,
-      required this.favorite,
-      required this.onTapped})
-      : super(key: key);
+  const BookItem({
+    Key? key,
+    required this.title,
+    required this.imageUrl,
+    required this.available,
+    required this.favorite,
+    required this.onTapped,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +98,10 @@ class BookItem extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-
                     //Favorite star
-                    favorite ? filledStar : emptyStar
+                    FavoriteItem(
+                      favorite: favorite,
+                    ),
                   ],
                 ),
               )
