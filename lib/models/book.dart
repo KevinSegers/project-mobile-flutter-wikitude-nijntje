@@ -4,15 +4,14 @@
 
 import 'dart:convert';
 
-List<BooksByCategory> booksByCategoryFromJson(String str) =>
-    List<BooksByCategory>.from(
-        json.decode(str).map((x) => BooksByCategory.fromJson(x)));
+List<Book> booksByCategoryFromJson(String str) =>
+    List<Book>.from(json.decode(str).map((x) => Book.fromJson(x)));
 
-String booksByCategoryToJson(List<BooksByCategory> data) =>
+String booksByCategoryToJson(List<Book> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class BooksByCategory {
-  BooksByCategory({
+class Book {
+  Book({
     required this.title,
     required this.author,
     required this.favorite,
@@ -28,8 +27,7 @@ class BooksByCategory {
   String coverImageUrl;
   String backCoverImageUrl;
 
-  factory BooksByCategory.fromJson(Map<String, dynamic> json) =>
-      BooksByCategory(
+  factory Book.fromJson(Map<String, dynamic> json) => Book(
         title: json["title"],
         author: json["author"],
         favorite: json["favorite"],

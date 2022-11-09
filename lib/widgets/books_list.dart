@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../apis/interactive_books_api.dart';
-import '../models/books_by_category.dart';
+import '../models/book.dart';
 import 'book_item.dart';
 
 // TODO Favorite aanpasbaar maken
@@ -27,7 +27,7 @@ class BooksList extends StatefulWidget {
 }
 
 class _BookListState extends State<BooksList> {
-  late List<BooksByCategory> bookList = <BooksByCategory>[];
+  late List<Book> bookList = <Book>[];
 
   //Wikitude
   List<String> features = ["image_tracking"];
