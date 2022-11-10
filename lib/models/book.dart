@@ -12,6 +12,7 @@ String booksByCategoryToJson(List<Book> data) =>
 
 class Book {
   Book({
+    required this.id,
     required this.title,
     required this.author,
     required this.favorite,
@@ -20,6 +21,7 @@ class Book {
     required this.backCoverImageUrl,
   });
 
+  int id;
   String title;
   String author;
   bool favorite;
@@ -28,6 +30,7 @@ class Book {
   String backCoverImageUrl;
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
+        id: json["id"],
         title: json["title"],
         author: json["author"],
         favorite: json["favorite"],
@@ -37,6 +40,7 @@ class Book {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "title": title,
         "author": author,
         "favorite": favorite,
