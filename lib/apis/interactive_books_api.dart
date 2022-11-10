@@ -64,24 +64,24 @@ class InteractiveBooksApi {
     }
   }
 
-  //update Seen Page
-  static Future<Page> updatePage(
-    Page page,
-  ) async {
-    var url = Uri.http(edgeService,
-        'interactivebooks/'); //TODO ? moet hier geen pages achter??
-    final response = await http.put(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(page),
-    );
+  // //update Seen Page
+  // static Future<Page> updatePage(
+  //   Page page,
+  // ) async {
+  //   var url = Uri.http(edgeService,
+  //       'interactivebooks/'); //TODO ? moet hier geen pages achter??
+  //   final response = await http.put(
+  //     url,
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(page),
+  //   );
 
-    if (response.statusCode == 200) {
-      return Page.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load');
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     return Page.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw Exception('Failed to load');
+  //   }
+  // }
 }
