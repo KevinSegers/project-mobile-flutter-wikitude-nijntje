@@ -1,27 +1,45 @@
 // book cover item widget
 
 import 'package:flutter/material.dart';
-
-import 'favorite_item.dart';
+import 'package:nijntje_is_alive/models/book.dart';
 
 typedef MyCallback = void Function();
 
 class BookItem extends StatelessWidget {
   final String title, imageUrl;
   final bool available, favorite;
-  final MyCallback onTapped;
+  final MyCallback onTapped, changeFavorite;
 
-  const BookItem({
-    Key? key,
-    required this.title,
-    required this.imageUrl,
-    required this.available,
-    required this.favorite,
-    required this.onTapped,
-  }) : super(key: key);
+  const BookItem(
+      {Key? key,
+      required this.title,
+      required this.imageUrl,
+      required this.available,
+      required this.favorite,
+      required this.onTapped,
+      required this.changeFavorite})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    IconButton filledStar = IconButton(
+        enableFeedback: true,
+        iconSize: 30,
+        color: Colors.yellow,
+        icon: const Icon(Icons.star),
+        onPressed: () {
+          changeFavorite();
+        });
+
+    IconButton emptyStar = IconButton(
+        enableFeedback: true,
+        iconSize: 30,
+        color: Colors.yellow,
+        icon: const Icon(Icons.star_outline_outlined),
+        onPressed: () {
+          changeFavorite();
+        });
+
     return GestureDetector(
         onTap: () {
           onTapped();
@@ -99,9 +117,7 @@ class BookItem extends StatelessWidget {
                       height: 5,
                     ),
                     //Favorite star
-                    FavoriteItem(
-                      favorite: favorite,
-                    ),
+                    Container(child: favorite ? filledStar : emptyStar)
                   ],
                 ),
               )

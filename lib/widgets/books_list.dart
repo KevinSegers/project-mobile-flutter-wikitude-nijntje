@@ -60,6 +60,13 @@ class _BookListState extends State<BooksList> {
     });
   }
 
+  void _updateFavorite(Book book) {
+    setState(() {
+      book.favorite = !book.favorite;
+      InteractiveBooksApi.updateBook(book);
+    });
+  }
+
   @override
   void dispose() {
     //dispose player
@@ -100,6 +107,9 @@ class _BookListState extends State<BooksList> {
             title: bookList[position].title,
             available: bookList[position].available,
             favorite: bookList[position].favorite,
+            changeFavorite: () {
+              _updateFavorite(bookList[position]);
+            },
             onTapped: () {
               if (bookList[position].available) {
                 navigateToNijntje();
@@ -113,7 +123,7 @@ class _BookListState extends State<BooksList> {
                       textAlign: TextAlign.center,
                     ),
                     content: const Text(
-                      'Dit boek is nog niet beschikbaar. \n We houden je op de hoogte.',
+                      'Dit boek is nog niet beschikbaar 🥲 \n We houden je op de hoogte.',
                       textAlign: TextAlign.center,
                     ),
                     actions: <Widget>[
