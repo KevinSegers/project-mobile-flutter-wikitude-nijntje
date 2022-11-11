@@ -28,6 +28,45 @@
     "page12":{
       items: ["nijntje","papaNijntje","auto","mamaNijntje"]},
   };
+
+  async function getItems(pageNumber){
+    let number = pageNumber.substring(4);
+    const options = {
+      method: 'GET', 
+      headers: {'Content-Type': 'application/json' },
+    };
+
+    await fetch('http://192.168.0.221:8050/interactivebooks/pages/bookTitle/Nijntje in de speeltuin/pageNumber/'+number, options)
+    .then(response => response.json());
+
+  }
+
+  function setSeen( pageNumber){
+    let number = pageNumber.substring(4);
+    const options = {
+      method: 'PUT', 
+      headers: {'Content-Type': 'application/json' },
+    };
+
+   fetch('http://192.168.0.221:8050/interactivebooks/pages/bookTitle/Nijntje in de speeltuin/pageNumber/'+number, options)
+                   .then(response => response.json());
+    // fetch('http://localhost8050:/interactivebooks/pages/booktitle/Nijntje%20in%20de%20speeltuin/pageNumber/'+number, options)
+    //           .then( async response => 
+    //             {const isJson = response.headers.get('content-type')?.includes('application/json');
+    //              const data = isJson && await response.json();
+      
+    //           // check for error response
+    //           if (!response.ok) {
+    //               // get error message from body or default to response status
+    //               const error = (data && data.message) || response.status;
+    //               return Promise.reject(error);
+    //           }
+    //       })
+    //       .catch(error => {
+    //           console.error('error!', error);
+    //       });
+ };
+
   
 var World = {
   loaded: false,
@@ -146,28 +185,7 @@ var World = {
 
   },
 
-  setSeen: async function setSeen( pageNumber){
-    let number = pageNumber.substring(4);
-    const options = {
-      method: 'PUT', 
-      headers: {'Content-Type': 'application/json' },
-    };
-    fetch('http://localhost8050:/interactivebooks/pages/booktitle/Nijntje%in%de%speeltuin/pageNumber/'+number, options)
-              .then( async response => 
-                {const isJson = response.headers.get('content-type')?.includes('application/json');
-                 const data = isJson && await response.json();
-      
-              // check for error response
-              if (!response.ok) {
-                  // get error message from body or default to response status
-                  const error = (data && data.message) || response.status;
-                  return Promise.reject(error);
-              }
-          })
-          .catch(error => {
-              console.error('error!', error);
-          });
- },
+  
 
   init: function initFn() {
     this.createOverlays();
@@ -253,16 +271,7 @@ var World = {
            }
            );
          this.addImageTargetCamDrawables(target, model);
-
-         let number = target.name.substring(4);
-         console.log(number);
-         const options = {
-           method: 'PUT', 
-           headers: {accept: 'application/json' },
-           body: JSON.stringify({ title: 'Fetch PUT Request' })
-         };
-         fetch('http://localhost:8050/interactivebooks/pages/bookTitle/Nijntje%in%de%speeltuin/pageNumber/'+number, options)
-                   .then(response => response.json());
+         setSeen(target.name);
          setTimeout(function() { World.animate(target.name, item, model, World.nijntjeSettings[item].translatex, World.nijntjeSettings[item].translatey, World.nijntjeSettings[item].translatez); }, 100);
        });            
  
