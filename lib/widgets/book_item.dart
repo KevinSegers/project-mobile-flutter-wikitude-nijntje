@@ -25,7 +25,7 @@ class BookItem extends StatelessWidget {
     IconButton filledStar = IconButton(
         enableFeedback: true,
         iconSize: 30,
-        color: Colors.yellow,
+        color: const Color.fromARGB(255, 253, 216, 53),
         icon: const Icon(Icons.star),
         onPressed: () {
           changeFavorite();
@@ -34,7 +34,7 @@ class BookItem extends StatelessWidget {
     IconButton emptyStar = IconButton(
         enableFeedback: true,
         iconSize: 30,
-        color: Colors.yellow,
+        color: const Color.fromARGB(255, 253, 216, 53),
         icon: const Icon(Icons.star_outline_outlined),
         onPressed: () {
           changeFavorite();

@@ -2,15 +2,15 @@ import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
 
-class ArNijntjeMultipleTargetsWidget extends StatefulWidget {
-  const ArNijntjeMultipleTargetsWidget({Key? key}) : super(key: key);
+class ArNijntjeTargetsWidget extends StatefulWidget {
+  const ArNijntjeTargetsWidget({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ArNijntjeMultipleTargetsWidgetState();
+  State<StatefulWidget> createState() => _ArNijntjeTargetsWidgetState();
 }
 
-class _ArNijntjeMultipleTargetsWidgetState
-    extends State<ArNijntjeMultipleTargetsWidget> with WidgetsBindingObserver {
+class _ArNijntjeTargetsWidgetState extends State<ArNijntjeTargetsWidget>
+    with WidgetsBindingObserver {
   late ArchitectWidget architectWidget;
   String wikitudeTrialLicenseKey =
       "1o9r1IvdiAVq1z5Itc+mTnxHKqHN4AJLFGFQMZIIk4KxVwyCDR98dtJ5uUjcrZs1bU5fZnZAT5sagoWz5S3L2boRuqihtgHqEv+3Qix3NK0BKJWJvMAamau231eeleBKHuaWBeLCrdxUKMSGHcr/K/O6xibZSw4Zhv/7SsWutwpTYWx0ZWRfXxLcVx9uTx497+NulVWSee290QPIHVpbDpkk6nPQCpC0N+l+EjdgJXv6fWQ2zDeF6SAmmO/YKP35y5s//QCDE4aHz9pRkXSCtP/3/7twxgg02zy1VMLG5RJDqCQThGCozQdJEcAVGTU/+HWBpK+QBa3NmDlJwljmYpW+jYn0ZJ9qgHD2oUWx0OJ8VolvwLucqwVjnGATpIHwS87koGTBCl3ZWn4CjZt7KIyXW+3DvwXF73zH7Cuvh6CubjnMzWHSNNmUQiLOhMgLfdjPyECsVzhKaJwf7ZoRziKm5BfneQNUy/Q6BeeizDMJx/q9msCHopGWcvsvFus9iVsLRTe7agXt6pRr4azx7Wcs2cCOYM1dqzMMYHd95JpTumRgo3imHQe312OTIUig7Wr6NrH/zNPkAC/hBx4Vo1G4k4UU52hyN1IiKxQaRLzPXSkAnhCzxMFwuiBnQUY0NdrAPHzm0UkKkY0jI78LABD+eV2UNbCrR2ESA441l9QcM2ufm/rck+yqH4A2gXts+TnhfWKreKFcWhXVVHJWmlRjsIpezDILwZEl12nAqCyU1hZVzCJhNF8MvARji8wK+DB0vL0f55FCZLKlMJ3vy2yU0fU0PZjzFhQc+cSDz7v2EiAzdgOqMwbPkoG+xOhaOqaYBgN8iSPEtkQQEjhUxQ==";
@@ -64,8 +64,8 @@ class _ArNijntjeMultipleTargetsWidgetState
   }
 
   Future<void> onArchitectWidgetCreated() async {
-    architectWidget.load(
-        "samples/nijntje/index.html", onLoadSuccess, onLoadFailed);
+    architectWidget.load("samples/nijntjemultipletargets/index.html",
+        onLoadSuccess, onLoadFailed);
     architectWidget.resume();
   }
 

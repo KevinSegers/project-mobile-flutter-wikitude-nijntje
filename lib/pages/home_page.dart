@@ -21,9 +21,15 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
         body: CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        backgroundColor: Colors.blueGrey,
+        /* backgroundColor: Colors.blueGrey,
         activeColor: Colors.white,
-        inactiveColor: Colors.grey,
+        inactiveColor: Colors.grey, 
+        */
+
+        // blauw:   backgroundColor: const Color.fromARGB(255, 21, 101, 192),
+        backgroundColor: const Color.fromARGB(255, 46, 125, 50),
+        activeColor: const Color.fromARGB(255, 253, 216, 53),
+        inactiveColor: const Color.fromARGB(255, 245, 127, 23),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
