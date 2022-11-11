@@ -4,8 +4,6 @@ import '../apis/interactive_books_api.dart';
 import '../models/book.dart';
 import 'book_item.dart';
 
-// TODO Favorite aanpasbaar maken
-
 // Wikitude
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';

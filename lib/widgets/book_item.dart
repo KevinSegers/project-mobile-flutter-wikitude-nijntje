@@ -1,7 +1,6 @@
 // book cover item widget
 
 import 'package:flutter/material.dart';
-import 'package:nijntje_is_alive/models/book.dart';
 
 typedef MyCallback = void Function();
 

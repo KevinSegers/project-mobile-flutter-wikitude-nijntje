@@ -3,14 +3,13 @@ import 'dart:convert';
 
 import '../models/book.dart';
 import '../models/category.dart';
-import '../models/page.dart';
 
 class InteractiveBooksApi {
   //Kevin
-  //static String edgeService = '192.168.0.199:8050';
+  static String edgeService = '192.168.0.199:8050';
 
   //michal
-  static String edgeService = '192.168.0.221:8050';
+  //static String edgeService = '192.168.0.221:8050';
 
   //FetchCategoriesWithUrls
   static Future<List<Category>> fetchCategoriesWithUrls() async {
@@ -63,25 +62,4 @@ class InteractiveBooksApi {
       throw Exception('Failed to load');
     }
   }
-
-  // //update Seen Page
-  // static Future<Page> updatePage(
-  //   Page page,
-  // ) async {
-  //   var url = Uri.http(edgeService,
-  //       'interactivebooks/'); //TODO ? moet hier geen pages achter??
-  //   final response = await http.put(
-  //     url,
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode(page),
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     return Page.fromJson(jsonDecode(response.body));
-  //   } else {
-  //     throw Exception('Failed to load');
-  //   }
-  // }
 }
