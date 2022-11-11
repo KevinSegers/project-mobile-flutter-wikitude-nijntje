@@ -1,6 +1,7 @@
 // book cover item widget
 
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 typedef MyCallback = void Function();
 
@@ -38,6 +39,20 @@ class BookItem extends StatelessWidget {
         onPressed: () {
           changeFavorite();
         });
+
+    Widget percentageSeen = GestureDetector(
+        onTap: () {
+          //TODO callback reset percentage seen
+          print("!!!!!!!!!!!!!! CLICKED!");
+        },
+        child: (Column(children: [
+          CircularPercentIndicator(
+              radius: 21.0,
+              lineWidth: 5.0,
+              percent: 0.4,
+              center: const Text("40%"),
+              progressColor: const Color.fromARGB(255, 46, 125, 50)),
+        ])));
 
     return GestureDetector(
         onTap: () {
@@ -116,7 +131,19 @@ class BookItem extends StatelessWidget {
                       height: 5,
                     ),
                     //Favorite star
-                    Container(child: favorite ? filledStar : emptyStar)
+
+                    Container(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(children: [
+                                favorite ? filledStar : emptyStar
+                              ]),
+                              if (available) ...[
+                                percentageSeen,
+                              ]
+                            ])),
                   ],
                 ),
               )
