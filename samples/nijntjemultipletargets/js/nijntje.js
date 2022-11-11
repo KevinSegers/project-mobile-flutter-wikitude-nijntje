@@ -28,7 +28,7 @@
     "page12":{
       items: ["nijntje","papaNijntje","auto","mamaNijntje"]},
   };
-
+  
 var World = {
   loaded: false,
   nijntjeSettings: {
@@ -146,10 +146,34 @@ var World = {
 
   },
 
+  setSeen: async function setSeen( pageNumber){
+    let number = pageNumber.substring(4);
+    const options = {
+      method: 'PUT', 
+      headers: {'Content-Type': 'application/json' },
+    };
+    fetch('http://localhost8050:/interactivebooks/pages/booktitle/Nijntje%in%de%speeltuin/pageNumber/'+number, options)
+              .then( async response => 
+                {const isJson = response.headers.get('content-type')?.includes('application/json');
+                 const data = isJson && await response.json();
+      
+              // check for error response
+              if (!response.ok) {
+                  // get error message from body or default to response status
+                  const error = (data && data.message) || response.status;
+                  return Promise.reject(error);
+              }
+          })
+          .catch(error => {
+              console.error('error!', error);
+          });
+ },
 
   init: function initFn() {
     this.createOverlays();
   },
+
+  
 
   createOverlays: function createOverlaysFn() {
     /*
@@ -229,7 +253,16 @@ var World = {
            }
            );
          this.addImageTargetCamDrawables(target, model);
-         this.setSeen(target.name);
+
+         let number = target.name.substring(4);
+         console.log(number);
+         const options = {
+           method: 'PUT', 
+           headers: {accept: 'application/json' },
+           body: JSON.stringify({ title: 'Fetch PUT Request' })
+         };
+         fetch('http://localhost:8050/interactivebooks/pages/bookTitle/Nijntje%in%de%speeltuin/pageNumber/'+number, options)
+                   .then(response => response.json());
          setTimeout(function() { World.animate(target.name, item, model, World.nijntjeSettings[item].translatex, World.nijntjeSettings[item].translatey, World.nijntjeSettings[item].translatez); }, 100);
        });            
  
@@ -285,6 +318,7 @@ var World = {
     else if(page ==="page4" || page ==="page5" ){
       if(item ==="nijntje"){
         // nijntje walking toward play ground
+        var walkingTranslate = new AR.PropertyAnimation(model, translate.y, offsetY, offsetY+1, 2000)
         var walkingRotate = new AR.PropertyAnimation(model, "rotate.z", null , 180 , 2000);
         var walking = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [walkingTranslate, walkingRotate])
         var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [ walking ]);
@@ -299,28 +333,7 @@ var World = {
     alert(error);
   },
 
- setSeen: async function setSeen( pageNumber){
-    let number = pageNumber.substring(4);
-    const options = {
-      method: 'PUT', 
-      headers: {'Content-Type': 'application/json' },
-    };
-    fetch('http://localhost8050:/interactivebooks/pages/booktitle/Nijntje%in%de%speeltuin/pageNumber/'+number, options)
-              .then( async response => 
-                {const isJson = response.headers.get('content-type')?.includes('application/json');
-                 const data = isJson && await response.json();
-      
-              // check for error response
-              if (!response.ok) {
-                  // get error message from body or default to response status
-                  const error = (data && data.message) || response.status;
-                  return Promise.reject(error);
-              }
-          })
-          .catch(error => {
-              console.error('error!', error);
-          });
- },
+
 
   hideInfoBar: function hideInfoBarFn() {
     document.getElementById('infoBox').style.display = 'none';

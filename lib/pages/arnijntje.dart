@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/arnijntjemultipletargets.dart';
+import '../widgets/arnijntjetargets.dart';
 
 class ArNijntjePage extends StatefulWidget {
   const ArNijntjePage({Key? key}) : super(key: key);
@@ -16,8 +16,8 @@ class _ArNijntjePageState extends State<ArNijntjePage> {
         title: const Text("Kinderboeken"),
       ),
       body: const Center(
-          // Here we load the Widget with the AR Nijtnje experience
-          child: ArNijntjeMultipleTargetsWidget()),
+          // Here we load the Widget with the AR Dino experience
+          child: ArNijntjeTargetsWidget()),
     );
   }
 }

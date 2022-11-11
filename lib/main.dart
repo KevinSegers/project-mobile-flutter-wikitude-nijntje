@@ -23,7 +23,14 @@ class ARBooksApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AR - Books',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        appBarTheme: const AppBarTheme(
+          //blauw: Color.fromARGB(255, 21, 101, 192),
+          backgroundColor: Color.fromARGB(255, 46, 125, 50),
+        ),
+        //primarySwatch: Colors.blueGrey,
+        // primaryColor: const Color.fromARGB(255, 21, 101, 192),
+        //  color: Colors.white,
+        //),
       ),
       home: const HomePage(),
     );

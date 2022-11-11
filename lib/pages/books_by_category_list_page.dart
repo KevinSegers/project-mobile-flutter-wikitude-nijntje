@@ -17,7 +17,7 @@ class _BooksByCategoryListPageState extends State<BooksByCategoryListPage> {
     String category = widget.category;
     return Scaffold(
       appBar: AppBar(
-        title: Text("AR boeken van $category"),
+        title: Text("Boeken van $category"),
         centerTitle: true,
       ),
       body: BooksList(

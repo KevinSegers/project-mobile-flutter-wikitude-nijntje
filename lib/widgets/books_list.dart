@@ -9,7 +9,7 @@ import 'book_item.dart';
 // Wikitude
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
-import '../pages/ardino.dart';
+import '../pages/arnijntje.dart';
 
 //audio player
 import 'package:just_audio/just_audio.dart';
@@ -87,8 +87,10 @@ class _BookListState extends State<BooksList> {
           _soundControl();
         },
         backgroundColor: sound
-            ? const Color.fromARGB(255, 136, 243, 141)
-            : const Color.fromARGB(255, 251, 120, 120),
+            // ? const Color.fromARGB(255, 136, 243, 141)
+            ? const Color.fromARGB(255, 46, 125, 50)
+            //   : const Color.fromARGB(255, 251, 120, 120),
+            : const Color.fromARGB(255, 245, 127, 23),
         child:
             sound ? const Icon(Icons.volume_up) : const Icon(Icons.volume_mute),
       ),
@@ -159,7 +161,7 @@ class _BookListState extends State<BooksList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ArDinoPage()),
+                              builder: (context) => const ArNijntjePage()),
                         ).then(
                           (value) => setState(
                               () {}), // For the player to start again after comming back from AR world
