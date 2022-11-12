@@ -1,52 +1,55 @@
- var ItemsPerPage = {
-    "page1":{
-      items: ["nijntje", "papaNijntje" ,"mamaNijntje"]},
-    "page2":{ 
-      items: ["nijntje","papaNijntje","auto","mamaNijntje" ]},
-    "page3":{
-      items:  ["nijntje", "papaNijntje","mamaNijntje"]
-    },
-    "page4":{
-      items:  ["nijntje", "schommel"]},
-    "page5":{
-      items: ["nijntje", "ringen"] },
-    "page6":{
-      items: ["nijntje","rekstok"]},
-    "page7":{
-      items: ["nijntje", "klimboom"]},
-    "page8":{
-      items: ["nijntje", "glijbaan"]},
-    "page9":{
-      items: ["nijntje", "wip", "papaNijntje"]
-    },
-    "page10":{
-      items: ["nijntje", "trampoline"]
-    },
-    "page11":{
-      items: ["nijntje","papaNijntje", "mamaNijntje"]
-    },
-    "page12":{
-      items: ["nijntje","papaNijntje","auto","mamaNijntje"]},
-  };
+var ItemsPerPage = {
+  page1: {
+    items: ['nijntje', 'papaNijntje', 'mamaNijntje'],
+  },
+  page2: {
+    items: ['nijntje', 'papaNijntje', 'auto', 'mamaNijntje'],
+  },
+  page3: {
+    items: ['nijntje', 'papaNijntje', 'mamaNijntje'],
+  },
+  page4: {
+    items: ['nijntje', 'schommel'],
+  },
+  page5: {
+    items: ['nijntje', 'ringen'],
+  },
+  page6: {
+    items: ['nijntje', 'rekstok'],
+  },
+  page7: {
+    items: ['nijntje', 'klimboom'],
+  },
+  page8: {
+    items: ['nijntje', 'glijbaan'],
+  },
+  page9: {
+    items: ['nijntje', 'wip', 'papaNijntje'],
+  },
+  page10: {
+    items: ['nijntje', 'trampoline'],
+  },
+  page11: {
+    items: ['nijntje', 'papaNijntje', 'mamaNijntje'],
+  },
+  page12: {
+    items: ['nijntje', 'papaNijntje', 'auto', 'mamaNijntje'],
+  },
+};
 
-  //localhost Kevin
-  //var edgeService = '192.168.0.199:8050'
-  
-  //localhost Michal
-  var edgeService = '192.168.0.221:8050';
+//localhost Kevin
+var edgeService = '192.168.0.199:8050';
 
- 
-  
+//localhost Michal
+//var edgeService = '192.168.0.221:8050';
+
 var World = {
   loaded: false,
-  nijntjeSettings: settingsPerItem() ,
-
+  nijntjeSettings: settingsPerItem(),
 
   init: function initFn() {
     this.createOverlays();
   },
-
-  
 
   createOverlays: function createOverlaysFn() {
     /*
@@ -56,9 +59,12 @@ var World = {
             Each target in the target collection is identified by its target name. By using this
             target name, it is possible to create an AR.ImageTrackable for every target in the target collection.
          */
-    this.targetCollectionResource = new AR.TargetCollectionResource('assets/nijntje.wtc',{
-        onError: World.onError
-      });
+    this.targetCollectionResource = new AR.TargetCollectionResource(
+      'assets/nijntje.wtc',
+      {
+        onError: World.onError,
+      }
+    );
 
     /*
       This resource is then used as parameter to create an AR.ImageTracker. Optional parameters are passed as
@@ -72,7 +78,7 @@ var World = {
     */
     this.tracker = new AR.ImageTracker(this.targetCollectionResource, {
       maximumNumberOfConcurrentlyTrackableTargets: 1, // a maximum of 1 page can be tracked simultaneously
-    /*
+      /*
     Disables extended range recognition.
     The reason for this is that extended range recognition requires more processing power and with multiple
     targets the SDK is trying to recognize targets until the maximumNumberOfConcurrentlyTrackableTargets
@@ -98,7 +104,6 @@ var World = {
     new AR.Model('assets/models/trampoline.wt3');
     new AR.Model('assets/models/wip.wt3');
 
-
     /*
     Note that this time we use "*" as target name. That means that the AR.ImageTrackable will respond to
     any target that is defined in the target collection. You can use wildcards to specify more complex name
@@ -107,53 +112,57 @@ var World = {
     */
     this.nijntjeTrackable = new AR.ImageTrackable(this.tracker, '*', {
       onImageRecognized: function (target) {
+        // var number = (target.name).substring(4);
+        // var testItems = getItems(target.name, edgeService);
+        // var testItems4;
 
-       // var number = (target.name).substring(4);
-        var testItems = getItems(target.name, edgeService);
-        var testItems4;
-        
-        console.log(testItems.then(
-          data => {
-            console.log(data);
-            testItems4 = data;
-          }
-        ));
-        var testItems3
-        const testItems2 = async() => {
-          testItems3 = await getItems(target.name, edgeService);
-        }
+        // console.log(
+        //   testItems.then((data) => {
+        //     console.log(data);
+        //     testItems4 = data;
+        //   })
+        // );
+        // var testItems3;
+        // const testItems2 = async () => {
+        //   testItems3 = await getItems(target.name, edgeService);
+        // };
 
-        testItems2();
-        console.log(testItems4);
-      
+        // testItems2();
+        // console.log(testItems4);
 
-
-      //  Create 3D models based on which target (target.name = page) was recognized
-        (ItemsPerPage[target.name].items).forEach(item => {
+        //  Create 3D models based on which target (target.name = page) was recognized
+        ItemsPerPage[target.name].items.forEach((item) => {
           console.log(item);
-           var model = new AR.Model('assets/models/' + item + '.wt3', {
-             scale: World.nijntjeSettings[item].scale,
-             rotate:{
+          var model = new AR.Model('assets/models/' + item + '.wt3', {
+            scale: World.nijntjeSettings[item].scale,
+            rotate: {
               x: World.nijntjeSettings[item].rotatex,
               z: World.nijntjeSettings[item].rotatez,
             },
-             translate:{
-               x: World.nijntjeSettings[item].translatex,
-               y: World.nijntjeSettings[item].translatey, 
-               z: World.nijntjeSettings[item].translatez,
-            }, 
+            translate: {
+              x: World.nijntjeSettings[item].translatex,
+              y: World.nijntjeSettings[item].translatey,
+              z: World.nijntjeSettings[item].translatez,
+            },
             onError: World.onError,
-           }
-           );
+          });
 
-         this.addImageTargetCamDrawables(target, model);
-         setTimeout(function() { World.animate(target.name, item, model, World.nijntjeSettings[item].translatex, World.nijntjeSettings[item].translatey, World.nijntjeSettings[item].translatez); }, 100);
-       });     
-       
-       setSeen(target.name, edgeService);
+          this.addImageTargetCamDrawables(target, model);
+          setTimeout(function () {
+            World.animate(
+              target.name,
+              item,
+              model,
+              World.nijntjeSettings[item].translatex,
+              World.nijntjeSettings[item].translatey,
+              World.nijntjeSettings[item].translatez
+            );
+          }, 100);
+        });
 
- 
-      World.hideInfoBar();
+        setSeen(target.name, edgeService);
+
+        World.hideInfoBar();
       },
       onError: World.onError,
     });
@@ -324,13 +333,9 @@ var World = {
     }
   },
 
-    
-
   onError: function onErrorFn(error) {
     alert(error);
   },
-
-
 
   hideInfoBar: function hideInfoBarFn() {
     document.getElementById('infoBox').style.display = 'none';

@@ -72,28 +72,40 @@ class _BookItemState extends State<BookItem> {
 
     Widget percentageSeen = GestureDetector(
         onTap: () {
-          showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                    title: Text(widget.title, textAlign: TextAlign.center),
-                    content: const Text(
-                      'Wil je dit boek ongelezen zetten?',
-                      textAlign: TextAlign.center,
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Annuleren'),
-                        child: const Text('Cancel'),
+          if (percentageBookSeen != "0") {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      title: Text(widget.title, textAlign: TextAlign.center),
+                      content: const Text(
+                        'Wil je dit boek ongelezen zetten?',
+                        textAlign: TextAlign.center,
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context, 'OK');
-                          _setBookUnseen(widget.title);
-                        },
-                        child: const Text('OK'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'Annuleren'),
+                          child: const Text('Annuleren'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, 'OK');
+                            _setBookUnseen(widget.title);
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ));
+          } else {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      title: Text(widget.title, textAlign: TextAlign.center),
+                      content: const Text(
+                        'Eens je dit boek aan het bekeken hebt kan je het terug ongelezen zetten.',
+                        textAlign: TextAlign.center,
                       ),
-                    ],
-                  ));
+                    ));
+          }
         },
         child: (Column(children: [
           CircularPercentIndicator(

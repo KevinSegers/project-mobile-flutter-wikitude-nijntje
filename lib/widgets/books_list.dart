@@ -113,21 +113,15 @@ class _BookListState extends State<BooksList> {
               } else {
                 showDialog<String>(
                   context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
+                  builder: (BuildContext context) => const AlertDialog(
+                    title: Text(
                       'Beschibaarheid',
                       textAlign: TextAlign.center,
                     ),
-                    content: const Text(
+                    content: Text(
                       'Dit boek is nog niet beschikbaar 🥲 \n We houden je op de hoogte.',
                       textAlign: TextAlign.center,
                     ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text('OK'),
-                      ),
-                    ],
                   ),
                 );
               }
