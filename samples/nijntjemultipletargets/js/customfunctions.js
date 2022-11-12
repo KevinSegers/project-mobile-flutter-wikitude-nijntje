@@ -1,3 +1,4 @@
+// get items form DB => Not used yet
 async function getItems(pageNumber, edgeService) {
   let number = pageNumber.substring(4);
   const options = {
@@ -26,6 +27,7 @@ async function getItems(pageNumber, edgeService) {
   }
 }
 
+// set page of a book seen
 async function setSeen(pageNumber, edgeService) {
   let number = pageNumber.substring(4);
   console.log('pageNumber' + number);
@@ -46,7 +48,6 @@ async function setSeen(pageNumber, edgeService) {
     if (!response.ok) {
       throw new Error('Http error:' + response.status);
     }
-    //const data = await response.json();
   } catch (error) {
     console.error(error);
   }
