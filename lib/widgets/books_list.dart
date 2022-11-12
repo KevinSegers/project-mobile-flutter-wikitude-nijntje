@@ -24,9 +24,6 @@ class BooksList extends StatefulWidget {
 class _BookListState extends State<BooksList> {
   late List<Book> bookList = <Book>[];
 
-  //Wikitude
-  List<String> features = ["image_tracking"];
-
   //Sound
   bool sound = false;
 
@@ -99,32 +96,9 @@ class _BookListState extends State<BooksList> {
         itemCount: bookList.length,
         itemBuilder: (context, position) {
           return BookItem(
-            imageUrl: bookList[position].coverImageUrl,
-            title: bookList[position].title,
-            available: bookList[position].available,
-            favorite: bookList[position].favorite,
+            book: bookList[position],
             changeFavorite: () {
               _updateFavorite(bookList[position]);
-            },
-            onTapped: () {
-              if (bookList[position].available) {
-                navigateToNijntje();
-                const Text("Scan de pagina");
-              } else {
-                showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => const AlertDialog(
-                    title: Text(
-                      'Beschibaarheid',
-                      textAlign: TextAlign.center,
-                    ),
-                    content: Text(
-                      'Dit boek is nog niet beschikbaar 🥲 \n We houden je op de hoogte.',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              }
             },
           );
         });
@@ -135,44 +109,5 @@ class _BookListState extends State<BooksList> {
       sound = !sound;
       player.playing ? player.stop() : player.play();
     });
-  }
-
-  void navigateToNijntje() {
-    debugPrint("Wij gaan naar Nijntje");
-
-    checkDeviceCompatibility().then((value) => {
-          if (value.success)
-            {
-              requestARPermissions().then((value) => {
-                    if (value.success)
-                      {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ArNijntjePage()),
-                        ).then(
-                          (value) => setState(
-                              () {}), // For the player to start again after comming back from AR world
-                        ),
-                        player.stop(), // Pause the music player
-                      }
-                    else
-                      {
-                        debugPrint("AR permissions denied"),
-                        debugPrint(value.message)
-                      }
-                  })
-            }
-          else
-            {debugPrint("Device incompatible"), debugPrint(value.message)}
-        });
-  }
-
-  Future<WikitudeResponse> checkDeviceCompatibility() async {
-    return await WikitudePlugin.isDeviceSupporting(features);
-  }
-
-  Future<WikitudeResponse> requestARPermissions() async {
-    return await WikitudePlugin.requestARPermissions(features);
   }
 }

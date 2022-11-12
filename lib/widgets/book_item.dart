@@ -1,25 +1,24 @@
-// book cover item widget
-
+import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
+import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
 import 'package:flutter/material.dart';
+import 'package:nijntje_is_alive/models/book.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../apis/interactive_books_api.dart';
+import '../pages/arnijntje.dart';
+
+// This should be controlled by parent but then I had troubles with reloading the percentage...
 
 typedef MyCallback = void Function();
 
 class BookItem extends StatefulWidget {
-  final String title, imageUrl;
-  final bool available, favorite;
-  final MyCallback onTapped, changeFavorite;
+  final MyCallback changeFavorite;
+  final Book book;
 
   const BookItem({
     Key? key,
-    required this.title,
-    required this.imageUrl,
-    required this.available,
-    required this.favorite,
-    required this.onTapped,
     required this.changeFavorite,
+    required this.book,
   }) : super(key: key);
 
   @override
@@ -28,11 +27,13 @@ class BookItem extends StatefulWidget {
 
 class _BookItemState extends State<BookItem> {
   late String percentageBookSeen = "0";
+  //Wikitude
+  List<String> features = ["image_tracking"];
 
   @override
   void initState() {
     super.initState();
-    _getPercentageBookSeen(widget.title);
+    _getPercentageBookSeen(widget.book.title);
   }
 
   void _getPercentageBookSeen(bookTitle) {
@@ -48,6 +49,44 @@ class _BookItemState extends State<BookItem> {
     setState(() {
       percentageBookSeen = "0";
     });
+  }
+
+  void navigateToNijntje() {
+    checkDeviceCompatibility().then((value) => {
+          if (value.success)
+            {
+              requestARPermissions().then((value) => {
+                    if (value.success)
+                      {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ArNijntjePage()),
+                        ).then(
+                          (value) => setState(() {
+                            _getPercentageBookSeen(widget.book
+                                .title); // Refresh percentage when coming back to booklist
+                          }),
+                        ),
+                      }
+                    else
+                      {
+                        debugPrint("AR permissions denied"),
+                        debugPrint(value.message)
+                      }
+                  })
+            }
+          else
+            {debugPrint("Device incompatible"), debugPrint(value.message)}
+        });
+  }
+
+  Future<WikitudeResponse> checkDeviceCompatibility() async {
+    return await WikitudePlugin.isDeviceSupporting(features);
+  }
+
+  Future<WikitudeResponse> requestARPermissions() async {
+    return await WikitudePlugin.requestARPermissions(features);
   }
 
   @override
@@ -76,7 +115,8 @@ class _BookItemState extends State<BookItem> {
             showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                      title: Text(widget.title, textAlign: TextAlign.center),
+                      title:
+                          Text(widget.book.title, textAlign: TextAlign.center),
                       content: const Text(
                         'Wil je dit boek ongelezen zetten?',
                         textAlign: TextAlign.center,
@@ -89,7 +129,7 @@ class _BookItemState extends State<BookItem> {
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context, 'OK');
-                            _setBookUnseen(widget.title);
+                            _setBookUnseen(widget.book.title);
                           },
                           child: const Text('OK'),
                         ),
@@ -99,7 +139,8 @@ class _BookItemState extends State<BookItem> {
             showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                      title: Text(widget.title, textAlign: TextAlign.center),
+                      title:
+                          Text(widget.book.title, textAlign: TextAlign.center),
                       content: const Text(
                         'Eens je dit boek aan het bekeken hebt kan je het terug ongelezen zetten.',
                         textAlign: TextAlign.center,
@@ -119,7 +160,24 @@ class _BookItemState extends State<BookItem> {
 
     return GestureDetector(
         onTap: () {
-          widget.onTapped();
+          if (widget.book.available) {
+            navigateToNijntje();
+            const Text("Scan de pagina");
+          } else {
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => const AlertDialog(
+                title: Text(
+                  'Beschibaarheid',
+                  textAlign: TextAlign.center,
+                ),
+                content: Text(
+                  'Dit boek is nog niet beschikbaar 🥲 \n We houden je op de hoogte.',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
         },
 
         //Container with boxShadow
@@ -148,7 +206,7 @@ class _BookItemState extends State<BookItem> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.network(
-                      widget.imageUrl,
+                      widget.book.coverImageUrl,
                       height: 80,
                       width: 80,
                       fit: BoxFit.fill,
@@ -169,7 +227,7 @@ class _BookItemState extends State<BookItem> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
-                        widget.title,
+                        widget.book.title,
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -185,7 +243,9 @@ class _BookItemState extends State<BookItem> {
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
                         textAlign: TextAlign.end,
-                        widget.available ? "Beschikbaar" : "Wordt verwacht",
+                        widget.book.available
+                            ? "Beschikbaar"
+                            : "Wordt verwacht",
                         style:
                             const TextStyle(color: Colors.black, fontSize: 14),
                       ),
@@ -201,9 +261,9 @@ class _BookItemState extends State<BookItem> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(children: [
-                                widget.favorite ? filledStar : emptyStar
+                                widget.book.favorite ? filledStar : emptyStar
                               ]),
-                              if (widget.available) ...[
+                              if (widget.book.available) ...[
                                 percentageSeen,
                               ]
                             ])),
