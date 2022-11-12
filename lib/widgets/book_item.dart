@@ -8,6 +8,7 @@ import '../apis/interactive_books_api.dart';
 import '../pages/arnijntje.dart';
 
 // This should be controlled by parent but then I had troubles with reloading the percentage...
+// Solution? Make navigateToNijntje a class and use Navigator.push?
 
 typedef MyCallback = void Function();
 
