@@ -62,4 +62,32 @@ class InteractiveBooksApi {
       throw Exception('Failed to load');
     }
   }
+
+  // fetch percentage of seen pages of a book
+  static Future<String> fetchPercentageBookSeen(String bookTitle) async {
+    var url =
+        Uri.http(edgeService, '/interactivebooks/books/$bookTitle/pagesseen');
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to load');
+    }
+  }
+
+  // reset seen pages of a book
+  static Future setBookUnseen(String bookTitle) async {
+    var url = Uri.http(
+        edgeService, '/interactivebooks/books/$bookTitle/setpagesunseen');
+
+    final response = await http.put(url);
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to reset pages');
+    }
+  }
 }

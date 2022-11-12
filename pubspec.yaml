@@ -39,6 +39,8 @@ dependencies:
   augmented_reality_plugin_wikitude:
     path: ./plugin/augmented_reality_plugin_wikitude/
 
+  percent_indicator: ^4.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -69,7 +71,6 @@ flutter:
     - samples/nijntjemultipletargets/assets/
     - samples/nijntjemultipletargets/assets/models/
     - assets/audio/
-   
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

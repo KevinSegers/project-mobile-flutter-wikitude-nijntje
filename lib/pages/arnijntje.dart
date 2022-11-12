@@ -16,7 +16,7 @@ class _ArNijntjePageState extends State<ArNijntjePage> {
         title: const Text("Kinderboeken"),
       ),
       body: const Center(
-          // Here we load the Widget with the AR Dino experience
+          // Here we load the Widget with the AR experience
           child: ArNijntjeTargetsWidget()),
     );
   }
