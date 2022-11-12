@@ -28,8 +28,8 @@ class HomePageState extends State<HomePage> {
 
         // blauw:   backgroundColor: const Color.fromARGB(255, 21, 101, 192),
         backgroundColor: const Color.fromARGB(255, 46, 125, 50),
-        activeColor: const Color.fromARGB(255, 253, 216, 53),
-        inactiveColor: const Color.fromARGB(255, 245, 127, 23),
+        activeColor: Colors.white,
+        inactiveColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

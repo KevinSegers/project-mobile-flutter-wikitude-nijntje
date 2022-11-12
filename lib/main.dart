@@ -27,10 +27,6 @@ class ARBooksApp extends StatelessWidget {
           //blauw: Color.fromARGB(255, 21, 101, 192),
           backgroundColor: Color.fromARGB(255, 46, 125, 50),
         ),
-        //primarySwatch: Colors.blueGrey,
-        // primaryColor: const Color.fromARGB(255, 21, 101, 192),
-        //  color: Colors.white,
-        //),
       ),
       home: const HomePage(),
     );

@@ -9,7 +9,7 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("AR kinder boeken"),
+        title: const Text("AR kinderboeken"),
         centerTitle: true,
       ),
       body: const CategoryListPage(),

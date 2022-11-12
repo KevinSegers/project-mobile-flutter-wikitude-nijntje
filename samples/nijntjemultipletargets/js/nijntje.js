@@ -29,163 +29,18 @@
       items: ["nijntje","papaNijntje","auto","mamaNijntje"]},
   };
 
-  async function getItems(pageNumber){
-    let number = pageNumber.substring(4);
-    const options = {
-      method: 'GET', 
-      headers: {'Content-Type': 'application/json' },
-    };
+  //localhost Kevin
+  //var edgeService = '192.168.0.199:8050'
+  
+  //localhost Michal
+  var edgeService = '192.168.0.221:8050';
 
-    await fetch('http://192.168.0.221:8050/interactivebooks/pages/bookTitle/Nijntje in de speeltuin/pageNumber/'+number, options)
-    .then(response => response.json());
-
-  }
-
-  function setSeen( pageNumber){
-    let number = pageNumber.substring(4);
-    const options = {
-      method: 'PUT', 
-      headers: {'Content-Type': 'application/json' },
-    };
-
-   fetch('http://192.168.0.221:8050/interactivebooks/pages/bookTitle/Nijntje in de speeltuin/pageNumber/'+number, options)
-                   .then(response => response.json());
-    // fetch('http://localhost8050:/interactivebooks/pages/booktitle/Nijntje%20in%20de%20speeltuin/pageNumber/'+number, options)
-    //           .then( async response => 
-    //             {const isJson = response.headers.get('content-type')?.includes('application/json');
-    //              const data = isJson && await response.json();
-      
-    //           // check for error response
-    //           if (!response.ok) {
-    //               // get error message from body or default to response status
-    //               const error = (data && data.message) || response.status;
-    //               return Promise.reject(error);
-    //           }
-    //       })
-    //       .catch(error => {
-    //           console.error('error!', error);
-    //       });
- };
-
+ 
   
 var World = {
   loaded: false,
-  nijntjeSettings: {
-    
-    auto:{
-      scale: 0.006,
-      rotatex: 0,
-      rotatey: 0,
-      rotatez: 0,
-      translatex: -3,
-      translatey: -0.5, 
-      translatez: -1
-    },
+  nijntjeSettings: settingsPerItem() ,
 
-    papaNijntje:{
-      scale: 0.05,
-      rotatex: 0,
-      rotatey: 0,
-      rotatez: 0,
-      translatex: -0.8 ,
-      translatey: -0.8,
-      translatez: -0.5
-    },
-
-    mamaNijntje:{
-      scale: 0.05,
-      rotatex: 0,
-      rotatey: 0,
-      rotatez: 0,
-      translatex:  -0.2 ,
-      translatey: -0.8,
-      translatez: -0.5
-    },
-
-    nijntje:{
-      scale: 0.01,
-      rotatex: 0,
-      rotatey: 0,
-      rotatez: 0,
-      translatex: -0.25,
-      translatey: -0.5,
-      translatez: -0.5
-    }, 
-
-    schommel:{
-      scale: 0.008,
-      rotatex:  0,
-      rotatey: 0,
-      rotatez: 0,
-      translatex: -0.3,
-      translatey: 0.4, 
-      translatez: 0
-    },
-
-    ringen:{
-      scale: 0.008,
-      rotatex:  0,
-      rotatey: 0,
-      rotatez: 0,
-      translatex: -0.3,
-      translatey: 0.4,
-      translatez: 0
-    }, 
-
-    rekstok:{
-      scale: 0.005,
-      rotatex:  0,
-      rotatey: 0,
-      rotatez: 0,
-      translatex: -0.2,
-      translatey: 0.2,
-      translatez: 0
-    }, 
-    
-    klimboom:{
-      scale: 0.02,
-      rotatex: 0,
-      rotatey: 0,
-      rotatez: 180,
-      translatex: -0.1,
-      translatey: 1, 
-      translatez: -1
-    }, 
-
-    glijbaan:{
-      scale: 0.3,
-      rotatex: 0,
-      rotatey: 0,
-      rotatez: 0 ,
-      translatex: -0.5,
-      translatey: 0.4, 
-      translatez: 0
-    },
-
-
-    trampoline:{
-      scale: 0.1,
-      rotatex: 0,
-      rotatey: 0,
-      rotatez: 0 ,
-      translatex:-0.2,
-      translatey: 0.02, 
-      translatez: 0
-    }, 
-
-    wip:{
-      scale: 0.5,
-      rotatex: 0,
-      rotatey: 0,
-      rotatez: 0 ,
-      translatex: -0.6,
-      translatey: 0.4, 
-      translatez: 0
-    },
-
-  },
-
-  
 
   init: function initFn() {
     this.createOverlays();
@@ -253,6 +108,26 @@ var World = {
     this.nijntjeTrackable = new AR.ImageTrackable(this.tracker, '*', {
       onImageRecognized: function (target) {
 
+       // var number = (target.name).substring(4);
+        var testItems = getItems(target.name, edgeService);
+        var testItems4;
+        
+        console.log(testItems.then(
+          data => {
+            console.log(data);
+            testItems4 = data;
+          }
+        ));
+        var testItems3
+        const testItems2 = async() => {
+          testItems3 = await getItems(target.name, edgeService);
+        }
+
+        testItems2();
+        console.log(testItems4);
+      
+
+
       //  Create 3D models based on which target (target.name = page) was recognized
         (ItemsPerPage[target.name].items).forEach(item => {
           console.log(item);
@@ -270,10 +145,13 @@ var World = {
             onError: World.onError,
            }
            );
+
          this.addImageTargetCamDrawables(target, model);
-         setSeen(target.name);
          setTimeout(function() { World.animate(target.name, item, model, World.nijntjeSettings[item].translatex, World.nijntjeSettings[item].translatey, World.nijntjeSettings[item].translatez); }, 100);
-       });            
+       });     
+       
+       setSeen(target.name, edgeService);
+
  
       World.hideInfoBar();
       },
@@ -281,62 +159,172 @@ var World = {
     });
   },
 
-  animate: function(page, item, model, offsetX, offsetY, offsetZ){
-    if(page === "page1" && item === "nijntje"){
+  animate: function (page, item, model, offsetX, offsetY, offsetZ) {
+    var distance,
+      nijntjejumpingup,
+      nijntjejumpingdown,
+      animationGroup,
+      riding,
+      parking,
+      riding2,
+      walkingrotate,
+      walking,
+      walkingToCar,
+      steppingInCar,
+      steppingInCarWaiting,
+      rotateToLeft,
+      animationGroupStart,
+      walking2,
+      walkingTranslate,
+      walkingRotate;
+    if (page === 'page1' && item === 'nijntje') {
       //nijntje jumping up and down
-      var distance = 0.3;
-      var nijntjejumpingup = new AR.PropertyAnimation(model, "translate.z", offsetZ,offsetZ+distance, 1000 );
-      var nijntjejumpingdown = new AR.PropertyAnimation(model, "translate.z", offsetZ + distance , offsetZ, 800 );
-      var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [nijntjejumpingup, nijntjejumpingdown])
+      distance = 0.3;
+      nijntjejumpingup = new AR.PropertyAnimation(
+        model,
+        'translate.z',
+        offsetZ,
+        offsetZ + distance,
+        1000
+      );
+      nijntjejumpingdown = new AR.PropertyAnimation(
+        model,
+        'translate.z',
+        offsetZ + distance,
+        offsetZ,
+        800
+      );
+      animationGroup = new AR.AnimationGroup(
+        AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL,
+        [nijntjejumpingup, nijntjejumpingdown]
+      );
       animationGroup.start(-1);
-    }
-
-    else if(page==="page2" || page==="page12"){
-      if(item ==="auto"){
+    } else if (page === 'page2' || page === 'page12') {
+      if (item === 'auto') {
         // riding auto - standing still - riding off page
-        var riding = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX+1, 4500);
-        var parking = new AR.PropertyAnimation(model, "translate.x", offsetX+1, offsetX+1, 2000);
-        var riding2 = new AR.PropertyAnimation(model, "translate.x", offsetX+1, offsetX+3, 5000);
-        var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [riding, parking, riding2]);
+        riding = new AR.PropertyAnimation(
+          model,
+          'translate.x',
+          offsetX,
+          offsetX + 1,
+          4500
+        );
+        parking = new AR.PropertyAnimation(
+          model,
+          'translate.x',
+          offsetX + 1,
+          offsetX + 1,
+          2000
+        );
+        riding2 = new AR.PropertyAnimation(
+          model,
+          'translate.x',
+          offsetX + 1,
+          offsetX + 3,
+          5000
+        );
+        animationGroup = new AR.AnimationGroup(
+          AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL,
+          [riding, parking, riding2]
+        );
         animationGroup.start(-1);
-      }
-      else{
+      } else {
         // nijntje + parents walking towards car + "disappear" in car
-        var walkingrotate = new AR.PropertyAnimation(model, "translate.y", offsetY, offsetY+0.8 ,5000); 
-        var walking = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX-0.18, 5000);
-        var walkingToCar = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [walkingrotate, walking]);
-        var steppingInCar = new AR.PropertyAnimation(model, "scale", null, 0, 0);
-        var steppingInCarWaiting = new AR.PropertyAnimation(model, "translate.x", offsetX-0.18, offsetX-0.18, 1000);
-        var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [walkingToCar, steppingInCarWaiting, steppingInCar]);
+        walkingrotate = new AR.PropertyAnimation(
+          model,
+          'translate.y',
+          offsetY,
+          offsetY + 0.8,
+          5000
+        );
+        walking = new AR.PropertyAnimation(
+          model,
+          'translate.x',
+          offsetX,
+          offsetX - 0.18,
+          5000
+        );
+        walkingToCar = new AR.AnimationGroup(
+          AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL,
+          [walkingrotate, walking]
+        );
+        steppingInCar = new AR.PropertyAnimation(model, 'scale', null, 0, 0);
+        steppingInCarWaiting = new AR.PropertyAnimation(
+          model,
+          'translate.x',
+          offsetX - 0.18,
+          offsetX - 0.18,
+          1000
+        );
+        animationGroup = new AR.AnimationGroup(
+          AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL,
+          [walkingToCar, steppingInCarWaiting, steppingInCar]
+        );
         animationGroup.start(-1);
       }
-      
-
-    }
-
-    else if(page=== "page3"){  
+    } else if (page === 'page3') {
       // nijntje + parents waling towards swing
-        var rotateToLeft = new AR.PropertyAnimation(model, "rotate.z", null , 45 , 2000);
-        var walking = new AR.PropertyAnimation(model, "translate.x", offsetX, offsetX+1.5, 2000);
-        var animationGroupStart = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [rotateToLeft, walking]);
-        var walking2 = new AR.PropertyAnimation(model, "translate.x", offsetX+1.5, offsetX+4, 2000)
-        var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [animationGroupStart, walking2]);
-        animationGroup.start(-1);
-    }
-
-    else if(page ==="page4" || page ==="page5" ){
-      if(item ==="nijntje"){
+      rotateToLeft = new AR.PropertyAnimation(
+        model,
+        'rotate.z',
+        null,
+        45,
+        2000
+      );
+      walking = new AR.PropertyAnimation(
+        model,
+        'translate.x',
+        offsetX,
+        offsetX + 1.5,
+        2000
+      );
+      animationGroupStart = new AR.AnimationGroup(
+        AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL,
+        [rotateToLeft, walking]
+      );
+      walking2 = new AR.PropertyAnimation(
+        model,
+        'translate.x',
+        offsetX + 1.5,
+        offsetX + 4,
+        2000
+      );
+      animationGroup = new AR.AnimationGroup(
+        AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL,
+        [animationGroupStart, walking2]
+      );
+      animationGroup.start(-1);
+    } else if (page === 'page4' || page === 'page5') {
+      if (item === 'nijntje') {
         // nijntje walking toward play ground
-        var walkingTranslate = new AR.PropertyAnimation(model, translate.y, offsetY, offsetY+1, 2000)
-        var walkingRotate = new AR.PropertyAnimation(model, "rotate.z", null , 180 , 2000);
-        var walking = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [walkingTranslate, walkingRotate])
-        var animationGroup = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL, [ walking ]);
+        walkingTranslate = new AR.PropertyAnimation(
+          model,
+          translate.y,
+          offsetY,
+          offsetY + 1,
+          2000
+        );
+        walkingRotate = new AR.PropertyAnimation(
+          model,
+          'rotate.z',
+          null,
+          180,
+          2000
+        );
+        walking = new AR.AnimationGroup(
+          AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL,
+          [walkingTranslate, walkingRotate]
+        );
+        animationGroup = new AR.AnimationGroup(
+          AR.CONST.ANIMATION_GROUP_TYPE.SEQUENTIAL,
+          [walking]
+        );
         animationGroup.start(-1);
-
-
       }
     }
   },
+
+    
 
   onError: function onErrorFn(error) {
     alert(error);
