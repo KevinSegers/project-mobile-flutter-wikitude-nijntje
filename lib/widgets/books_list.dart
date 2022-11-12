@@ -15,10 +15,7 @@ import 'package:just_audio/just_audio.dart';
 class BooksList extends StatefulWidget {
   final String category;
 
-  const BooksList({
-    Key? key,
-    required this.category,
-  }) : super(key: key);
+  const BooksList({Key? key, required this.category}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _BookListState();
@@ -40,18 +37,17 @@ class _BookListState extends State<BooksList> {
   void initState() {
     super.initState();
 
-    String currentCategory = widget.category;
-    _getBooksByCategory(currentCategory);
+    _getBooksByCategory(widget.category);
 
     //Audio
-    String audioUrl = "assets/audio/$currentCategory.mp3";
+    String audioUrl = "assets/audio/${widget.category}.mp3";
     player = AudioPlayer();
     player.setLoopMode(LoopMode.all);
     Future.delayed(Duration.zero, () => player.setAsset(audioUrl));
   }
 
-  void _getBooksByCategory(currentCategory) {
-    InteractiveBooksApi.fetchBooksByCategory(currentCategory).then((result) {
+  void _getBooksByCategory(category) {
+    InteractiveBooksApi.fetchBooksByCategory(category).then((result) {
       setState(() {
         bookList = result;
       });

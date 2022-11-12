@@ -3,22 +3,52 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../apis/interactive_books_api.dart';
+
 typedef MyCallback = void Function();
 
-class BookItem extends StatelessWidget {
+class BookItem extends StatefulWidget {
   final String title, imageUrl;
   final bool available, favorite;
   final MyCallback onTapped, changeFavorite;
 
-  const BookItem(
-      {Key? key,
-      required this.title,
-      required this.imageUrl,
-      required this.available,
-      required this.favorite,
-      required this.onTapped,
-      required this.changeFavorite})
-      : super(key: key);
+  const BookItem({
+    Key? key,
+    required this.title,
+    required this.imageUrl,
+    required this.available,
+    required this.favorite,
+    required this.onTapped,
+    required this.changeFavorite,
+  }) : super(key: key);
+
+  @override
+  State<BookItem> createState() => _BookItemState();
+}
+
+class _BookItemState extends State<BookItem> {
+  late String percentageBookSeen = "0";
+
+  @override
+  void initState() {
+    super.initState();
+    _getPercentageBookSeen(widget.title);
+  }
+
+  void _getPercentageBookSeen(bookTitle) {
+    InteractiveBooksApi.fetchPercentageBookSeen(bookTitle).then((result) {
+      setState(() {
+        percentageBookSeen = result;
+      });
+    });
+  }
+
+  void _setBookUnseen(bookTitle) {
+    InteractiveBooksApi.setBookUnseen(bookTitle);
+    setState(() {
+      percentageBookSeen = "0";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +58,7 @@ class BookItem extends StatelessWidget {
         color: const Color.fromARGB(255, 253, 216, 53),
         icon: const Icon(Icons.star),
         onPressed: () {
-          changeFavorite();
+          widget.changeFavorite();
         });
 
     IconButton emptyStar = IconButton(
@@ -37,26 +67,47 @@ class BookItem extends StatelessWidget {
         color: const Color.fromARGB(255, 253, 216, 53),
         icon: const Icon(Icons.star_outline_outlined),
         onPressed: () {
-          changeFavorite();
+          widget.changeFavorite();
         });
 
     Widget percentageSeen = GestureDetector(
         onTap: () {
-          //TODO callback reset percentage seen
-          print("!!!!!!!!!!!!!! CLICKED!");
+          showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                    title: Text(widget.title, textAlign: TextAlign.center),
+                    content: const Text(
+                      'Wil je dit boek ongelezen zetten?',
+                      textAlign: TextAlign.center,
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Annuleren'),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, 'OK');
+                          _setBookUnseen(widget.title);
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ));
         },
         child: (Column(children: [
           CircularPercentIndicator(
               radius: 21.0,
               lineWidth: 5.0,
-              percent: 0.4,
-              center: const Text("40%"),
+              percent: double.parse(percentageBookSeen),
+              center: Text(
+                  "${(double.parse(percentageBookSeen) * 100).toStringAsFixed(0)}%"),
               progressColor: const Color.fromARGB(255, 46, 125, 50)),
         ])));
 
     return GestureDetector(
         onTap: () {
-          onTapped();
+          widget.onTapped();
         },
 
         //Container with boxShadow
@@ -85,7 +136,7 @@ class BookItem extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.network(
-                      imageUrl,
+                      widget.imageUrl,
                       height: 80,
                       width: 80,
                       fit: BoxFit.fill,
@@ -106,7 +157,7 @@ class BookItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
-                        title,
+                        widget.title,
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -122,7 +173,7 @@ class BookItem extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
                         textAlign: TextAlign.end,
-                        available ? "Beschikbaar" : "Wordt verwacht",
+                        widget.available ? "Beschikbaar" : "Wordt verwacht",
                         style:
                             const TextStyle(color: Colors.black, fontSize: 14),
                       ),
@@ -138,9 +189,9 @@ class BookItem extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(children: [
-                                favorite ? filledStar : emptyStar
+                                widget.favorite ? filledStar : emptyStar
                               ]),
-                              if (available) ...[
+                              if (widget.available) ...[
                                 percentageSeen,
                               ]
                             ])),
