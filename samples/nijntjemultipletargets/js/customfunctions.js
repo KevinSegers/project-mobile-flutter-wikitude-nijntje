@@ -28,19 +28,21 @@ async function getItems(pageNumber, edgeService) {
 
 async function setSeen(pageNumber, edgeService) {
   let number = pageNumber.substring(4);
+  console.log('pageNumber' + number);
   const options = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
   };
 
   try {
-    const response = await fetch(
+    const url =
       'http://' +
-        edgeService +
-        '/interactivebooks/pages/booktitle/Nijntje in de speeltuin/pagenumber/' +
-        number,
-      options
-    );
+      edgeService +
+      '/interactivebooks/pages/booktitle/Nijntje%20in%20de%20speeltuin/pagenumber/' +
+      number;
+    console.log('url: ' + url);
+    const response = await fetch(url, options);
+
     if (!response.ok) {
       throw new Error('Http error:' + response.status);
     }

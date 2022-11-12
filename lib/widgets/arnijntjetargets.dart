@@ -2,6 +2,8 @@ import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
 
+import '../globals/globals.dart' as globals;
+
 class ArNijntjeTargetsWidget extends StatefulWidget {
   const ArNijntjeTargetsWidget({Key? key}) : super(key: key);
 
@@ -71,6 +73,8 @@ class _ArNijntjeTargetsWidgetState extends State<ArNijntjeTargetsWidget>
 
   Future<void> onLoadSuccess() async {
     debugPrint("Successfully loaded Architect World");
+    const edgeServiceUrl = globals.globalEdgeService;
+    architectWidget.callJavascript('World.newData("$edgeServiceUrl")');
   }
 
   Future<void> onLoadFailed(String error) async {

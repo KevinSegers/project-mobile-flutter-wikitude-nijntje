@@ -38,12 +38,14 @@ var ItemsPerPage = {
 };
 
 //localhost Kevin
-var edgeService = '192.168.0.199:8050';
+//var edgeService = '192.168.0.199:8050';
 
 //localhost Michal
 //var edgeService = '192.168.0.221:8050';
 
 var World = {
+  edgeService: '',
+
   loaded: false,
   nijntjeSettings: settingsPerItem(),
 
@@ -160,7 +162,7 @@ var World = {
           }, 100);
         });
 
-        setSeen(target.name, edgeService);
+        setSeen(target.name, World.edgeService);
 
         World.hideInfoBar();
       },
@@ -344,6 +346,10 @@ var World = {
   showInfoBar: function worldLoadedFn() {
     document.getElementById('infoBox').style.display = 'table';
     document.getElementById('loadingMessage').style.display = 'none';
+  },
+
+  newData: function newDataFn(url) {
+    World.edgeService = url;
   },
 };
 

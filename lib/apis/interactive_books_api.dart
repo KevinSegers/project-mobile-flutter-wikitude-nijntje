@@ -3,13 +3,10 @@ import 'dart:convert';
 
 import '../models/book.dart';
 import '../models/category.dart';
+import '../globals/globals.dart' as globals;
 
 class InteractiveBooksApi {
-  //Kevin
-  static String edgeService = '192.168.0.199:8050';
-
-  //michal
-  //static String edgeService = '192.168.0.221:8050';
+  static String edgeService = globals.globalEdgeService;
 
   //FetchCategoriesWithUrls
   static Future<List<Category>> fetchCategoriesWithUrls() async {
