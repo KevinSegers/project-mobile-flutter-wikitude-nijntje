@@ -24,6 +24,9 @@ class BooksList extends StatefulWidget {
 class _BookListState extends State<BooksList> {
   late List<Book> bookList = <Book>[];
 
+  //Loading indicator
+  bool isLoading = false;
+
   //Sound
   bool sound = false;
 
@@ -44,9 +47,11 @@ class _BookListState extends State<BooksList> {
   }
 
   void _getBooksByCategory(category) {
+    isLoading = true;
     InteractiveBooksApi.fetchBooksByCategory(category).then((result) {
       setState(() {
         bookList = result;
+        isLoading = false;
       });
     });
   }
@@ -62,6 +67,7 @@ class _BookListState extends State<BooksList> {
   void dispose() {
     //dispose player
     player.dispose();
+
     super.dispose();
   }
 
@@ -78,14 +84,18 @@ class _BookListState extends State<BooksList> {
           _soundControl();
         },
         backgroundColor: sound
-            // ? const Color.fromARGB(255, 136, 243, 141)
             ? const Color.fromARGB(255, 46, 125, 50)
-            //   : const Color.fromARGB(255, 251, 120, 120),
             : const Color.fromARGB(255, 245, 127, 23),
         child:
             sound ? const Icon(Icons.volume_up) : const Icon(Icons.volume_mute),
       ),
-      body: _bookListItems(),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 46, 125, 50),
+              semanticsLabel: 'Loading',
+            ))
+          : _bookListItems(),
     );
   }
 

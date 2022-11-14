@@ -21,12 +21,6 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
         body: CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        /* backgroundColor: Colors.blueGrey,
-        activeColor: Colors.white,
-        inactiveColor: Colors.grey, 
-        */
-
-        // blauw:   backgroundColor: const Color.fromARGB(255, 21, 101, 192),
         backgroundColor: const Color.fromARGB(255, 46, 125, 50),
         activeColor: Colors.white,
         inactiveColor: Colors.grey,
@@ -44,7 +38,7 @@ class HomePageState extends State<HomePage> {
       tabBuilder: (context, index) {
         return CupertinoTabView(
           builder: (context) {
-            return data[index];
+            return data[index]; // Home or info tab
           },
         );
       },

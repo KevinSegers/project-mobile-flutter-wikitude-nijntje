@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../models/book.dart';
 import '../models/category.dart';
 import '../globals/globals.dart' as globals;
+import '../models/page.dart';
 
 class InteractiveBooksApi {
   static String edgeService = globals.globalEdgeService;
@@ -75,14 +76,20 @@ class InteractiveBooksApi {
   }
 
   // reset seen pages of a book
-  static Future setBookUnseen(String bookTitle) async {
+  static Future<List<dynamic>> setBookUnseen(String bookTitle) async {
     var url = Uri.http(
         edgeService, '/interactivebooks/books/$bookTitle/setpagesunseen');
 
-    final response = await http.put(url);
+    var response = await http.put(
+      url,
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+    );
 
     if (response.statusCode == 200) {
-      return response.body;
+      List<dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse
+          .map((page) => Page.fromJson(page as Map<String, dynamic>))
+          .toList();
     } else {
       throw Exception('Failed to reset pages');
     }

@@ -39,6 +39,8 @@ class Book {
         backCoverImageUrl: json["backCoverImageUrl"],
       );
 
+  set percentageRead(void percentageRead) {}
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,

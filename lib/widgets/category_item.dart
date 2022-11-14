@@ -25,13 +25,13 @@ class CategoryItem extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10), //border corner radius
+          borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5), //color of shadow
-              spreadRadius: 5, //spread radius
-              blurRadius: 7, // blur radius
-              offset: const Offset(0, 2), // changes position of shadow
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 2),
             ),
           ],
         ),

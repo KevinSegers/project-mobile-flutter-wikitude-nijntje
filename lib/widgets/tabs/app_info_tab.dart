@@ -12,7 +12,6 @@ class InfoTab extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-            //   alignment: Alignment.center,
             margin: const EdgeInsets.only(left: 10.0, right: 10.0),
             padding: const EdgeInsets.only(left: 5.0, top: 10.0),
             child: Column(

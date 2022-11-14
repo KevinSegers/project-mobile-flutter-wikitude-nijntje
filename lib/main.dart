@@ -16,7 +16,6 @@ void main() {
 class ARBooksApp extends StatelessWidget {
   const ARBooksApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,7 +23,6 @@ class ARBooksApp extends StatelessWidget {
       title: 'AR - Books',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          //blauw: Color.fromARGB(255, 21, 101, 192),
           backgroundColor: Color.fromARGB(255, 46, 125, 50),
         ),
       ),

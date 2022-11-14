@@ -7,7 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../apis/interactive_books_api.dart';
 import '../pages/arnijntje.dart';
 
-// This should be controlled by parent but then I had troubles with reloading the percentage...
+// This should be controlled by parent but then we had troubles with reloading the percentage...
 // Solution? Make navigateToNijntje a class and use Navigator.push?
 
 typedef MyCallback = void Function();
@@ -27,7 +27,11 @@ class BookItem extends StatefulWidget {
 }
 
 class _BookItemState extends State<BookItem> {
-  late String percentageBookSeen = "0";
+  String percentageBookSeen = "0";
+
+  //Loading indicator
+  bool isLoading = false;
+
   //Wikitude
   List<String> features = ["image_tracking"];
 
@@ -38,17 +42,20 @@ class _BookItemState extends State<BookItem> {
   }
 
   void _getPercentageBookSeen(bookTitle) {
+    isLoading = true;
     InteractiveBooksApi.fetchPercentageBookSeen(bookTitle).then((result) {
       setState(() {
         percentageBookSeen = result;
+        isLoading = false;
       });
     });
   }
 
   void _setBookUnseen(bookTitle) {
-    InteractiveBooksApi.setBookUnseen(bookTitle);
-    setState(() {
-      percentageBookSeen = "0";
+    InteractiveBooksApi.setBookUnseen(bookTitle).then((result) {
+      setState(() {
+        percentageBookSeen = "0";
+      });
     });
   }
 
@@ -150,13 +157,19 @@ class _BookItemState extends State<BookItem> {
           }
         },
         child: (Column(children: [
-          CircularPercentIndicator(
-              radius: 21.0,
-              lineWidth: 5.0,
-              percent: double.parse(percentageBookSeen),
-              center: Text(
-                  "${(double.parse(percentageBookSeen) * 100).toStringAsFixed(0)}%"),
-              progressColor: const Color.fromARGB(255, 46, 125, 50)),
+          isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
+                  color: Color.fromARGB(255, 46, 125, 50),
+                  semanticsLabel: 'Loading',
+                ))
+              : CircularPercentIndicator(
+                  radius: 21.0,
+                  lineWidth: 5.0,
+                  percent: double.parse(percentageBookSeen),
+                  center: Text(
+                      "${(double.parse(percentageBookSeen) * 100).toStringAsFixed(0)}%"),
+                  progressColor: const Color.fromARGB(255, 46, 125, 50)),
         ])));
 
     return GestureDetector(
@@ -187,13 +200,13 @@ class _BookItemState extends State<BookItem> {
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(10), //border corner radius
+            borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5), //color of shadow
-                spreadRadius: 5, //spread radius
-                blurRadius: 7, // blur radius
-                offset: const Offset(0, 2), // changes position of shadow
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 2),
               ),
             ],
           ),

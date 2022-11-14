@@ -20,26 +20,35 @@ class CategoryListPage extends StatefulWidget {
 class _CategoryListPageState extends State<CategoryListPage> {
   late List<Category> categoryList = <Category>[];
 
+  //Loading indicator
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
     _getCategories();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _categoryItems(),
-    );
-  }
-
   void _getCategories() {
+    isLoading = true;
     InteractiveBooksApi.fetchCategoriesWithUrls().then((result) {
       setState(() {
         categoryList = result;
-        //debugPrint(result[0].url.toString());
+        isLoading = false;
       });
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(
+                color: Color.fromARGB(255, 46, 125, 50),
+                semanticsLabel: 'Loading',
+              ))
+            : _categoryItems());
   }
 
   GridView _categoryItems() {
