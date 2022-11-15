@@ -53,6 +53,8 @@ async function setSeen(pageNumber, edgeService) {
   }
 }
 
+
+//settings per item
 function settingsPerItem() {
   return {
     auto: {
@@ -121,7 +123,7 @@ function settingsPerItem() {
       rotatey: 0,
       rotatez: 0,
       translatex: -0.2,
-      translatey: 0.2,
+      translatey: 0.4,
       translatez: 0,
     },
 
