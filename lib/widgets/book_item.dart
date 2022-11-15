@@ -150,7 +150,7 @@ class _BookItemState extends State<BookItem> {
                       title:
                           Text(widget.book.title, textAlign: TextAlign.center),
                       content: const Text(
-                        'Eens je dit boek aan het bekeken hebt kan je het terug ongelezen zetten.',
+                        'Eens je dit boek bekeken hebt kan je het terug ongelezen zetten.',
                         textAlign: TextAlign.center,
                       ),
                     ));
@@ -186,7 +186,7 @@ class _BookItemState extends State<BookItem> {
                   textAlign: TextAlign.center,
                 ),
                 content: Text(
-                  'Dit boek is nog niet beschikbaar 🥲 \n We houden je op de hoogte.',
+                  'Dit boek is nog niet beschikbaar \n We houden je op de hoogte.',
                   textAlign: TextAlign.center,
                 ),
               ),
