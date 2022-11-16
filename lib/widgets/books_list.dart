@@ -4,11 +4,6 @@ import '../apis/interactive_books_api.dart';
 import '../models/book.dart';
 import 'book_item.dart';
 
-// Wikitude
-import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
-import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
-import '../pages/arnijntje.dart';
-
 //audio player
 import 'package:just_audio/just_audio.dart';
 

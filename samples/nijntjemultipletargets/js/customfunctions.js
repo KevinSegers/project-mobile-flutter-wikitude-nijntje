@@ -5,26 +5,26 @@ async function getItems(pageNumber, edgeService) {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
-
-  try {
-    var result;
-    const response = await fetch(
-      'http://' +
-        edgeService +
-        '/interactivebooks/booktitle/Nijntje in de speeltuin/pagenumber/' +
-        number +
-        '/items',
-      options
-    );
-    if (!response.ok) {
-      throw new Error('Http error:' + response.status);
-    }
-    const data = await response.json();
-    console.log(data);
-    return result;
-  } catch (error) {
-    console.error(error);
-  }
+  await fetch(
+    'http://' +
+      edgeService +
+      '/interactivebooks/booktitle/Nijntje in de speeltuin/pagenumber/' +
+      number +
+      '/items',
+    options
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log('ITEMS!!!!' + data);
+    })
+    .catch((error) => {
+      console.error(`Could not get items: ${error}`);
+    });
 }
 
 // set page of a book seen
@@ -53,6 +53,44 @@ async function setSeen(pageNumber, edgeService) {
   }
 }
 
+var ItemsPerPage = {
+  page1: {
+    items: ['nijntje', 'papaNijntje', 'mamaNijntje'],
+  },
+  page2: {
+    items: ['nijntje', 'papaNijntje', 'auto', 'mamaNijntje'],
+  },
+  page3: {
+    items: ['nijntje', 'papaNijntje', 'mamaNijntje'],
+  },
+  page4: {
+    items: ['nijntje', 'schommel'],
+  },
+  page5: {
+    items: ['nijntje', 'ringen'],
+  },
+  page6: {
+    items: ['nijntje', 'rekstok'],
+  },
+  page7: {
+    items: ['nijntje', 'klimboom'],
+  },
+  page8: {
+    items: ['nijntje', 'glijbaan'],
+  },
+  page9: {
+    items: ['nijntje', 'wip', 'papaNijntje'],
+  },
+  page10: {
+    items: ['nijntje', 'trampoline'],
+  },
+  page11: {
+    items: ['nijntje', 'papaNijntje', 'mamaNijntje'],
+  },
+  page12: {
+    items: ['nijntje', 'papaNijntje', 'auto', 'mamaNijntje'],
+  },
+};
 
 //settings per item
 function settingsPerItem() {
