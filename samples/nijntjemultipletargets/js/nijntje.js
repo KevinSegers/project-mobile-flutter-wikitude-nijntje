@@ -40,10 +40,10 @@ var World = {
 
     this.nijntjeTrackable = new AR.ImageTrackable(this.tracker, '*', {
       onImageRecognized: function (target) {
-        getItems(target.name, World.edgeService);
-        //  Create 3D models based on which target (target.name = page) was recognized
+        //getItems(target.name, World.edgeService); // get items from the edge service => Not fully implemented yet
+
+        //  Create 3D models based on which target (target.name = page) was recognized and set the initial appearing position
         ItemsPerPage[target.name].items.forEach((item) => {
-          console.log(item);
           var model = new AR.Model('assets/models/' + item + '.wt3', {
             scale: World.nijntjeSettings[item].scale,
             rotate: {
@@ -58,6 +58,7 @@ var World = {
             onError: World.onError,
           });
 
+          // Draw model
           this.addImageTargetCamDrawables(target, model);
           setTimeout(function () {
             World.animate(
@@ -71,6 +72,7 @@ var World = {
           }, 100);
         });
 
+        // Set page as seen
         setSeen(target.name, World.edgeService);
 
         World.hideInfoBar();

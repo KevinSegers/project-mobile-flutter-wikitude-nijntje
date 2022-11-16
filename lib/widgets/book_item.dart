@@ -99,6 +99,7 @@ class _BookItemState extends State<BookItem> {
 
   @override
   Widget build(BuildContext context) {
+    // Two Favorite icons
     IconButton filledStar = IconButton(
         enableFeedback: true,
         iconSize: 30,
@@ -117,6 +118,7 @@ class _BookItemState extends State<BookItem> {
           widget.changeFavorite();
         });
 
+    // Percentage seen widget
     Widget percentageSeen = GestureDetector(
         onTap: () {
           if (percentageBookSeen != "0") {
@@ -173,6 +175,7 @@ class _BookItemState extends State<BookItem> {
         ])));
 
     return GestureDetector(
+        // Tab on whole book item
         onTap: () {
           if (widget.book.available) {
             navigateToNijntje();
@@ -210,9 +213,11 @@ class _BookItemState extends State<BookItem> {
               ),
             ],
           ),
+
+          // Row per book
           child: Row(
             children: <Widget>[
-              //Image
+              //Image cover of book
               Expanded(
                 flex: 0,
                 child: Padding(
@@ -267,16 +272,21 @@ class _BookItemState extends State<BookItem> {
                     const SizedBox(
                       height: 5,
                     ),
-                    //Favorite star
 
+                    //Favorite star and percentage seen
                     Container(
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(children: [
-                                widget.book.favorite ? filledStar : emptyStar
-                              ]),
+                              Column(
+                                  // Favorite
+                                  children: [
+                                    widget.book.favorite
+                                        ? filledStar
+                                        : emptyStar
+                                  ]),
+                              // Percentage seen
                               if (widget.book.available) ...[
                                 percentageSeen,
                               ]

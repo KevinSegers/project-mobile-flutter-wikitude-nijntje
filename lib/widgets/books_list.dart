@@ -73,6 +73,7 @@ class _BookListState extends State<BooksList> {
       player.play();
     }
     return Scaffold(
+      //Floating action button to control sound
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -85,11 +86,13 @@ class _BookListState extends State<BooksList> {
             sound ? const Icon(Icons.volume_up) : const Icon(Icons.volume_mute),
       ),
       body: isLoading
+          //Loading indicator if Loading
           ? const Center(
               child: CircularProgressIndicator(
               color: Color.fromARGB(255, 46, 125, 50),
               semanticsLabel: 'Loading',
             ))
+          //Book list if not loading
           : _bookListItems(),
     );
   }
