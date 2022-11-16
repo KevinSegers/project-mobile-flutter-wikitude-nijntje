@@ -182,7 +182,7 @@ class _BookItemState extends State<BookItem> {
               context: context,
               builder: (BuildContext context) => const AlertDialog(
                 title: Text(
-                  'Beschibaarheid',
+                  'Beschikbaarheid',
                   textAlign: TextAlign.center,
                 ),
                 content: Text(
